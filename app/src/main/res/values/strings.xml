@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Скороговорун</string>
+    <string name="exercises">Упражнения</string>
+    <string name="courses">Курсы</string>
+    <string name="favorites">Избранное</string>
+    <string name="settings">Настройки</string>
 </resources>
