@@ -1,4 +1,4 @@
-package shavkunov.skorogovorun.lite;
+package shavkunov.skorogovorun.lite.controller;
 
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,11 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shavkunov.skorogovorun.lite.R;
+import shavkunov.skorogovorun.lite.controller.tabs.CoursesFragment;
+import shavkunov.skorogovorun.lite.controller.tabs.ExercisesFragment;
+import shavkunov.skorogovorun.lite.controller.tabs.FavoritesFragment;
+import shavkunov.skorogovorun.lite.controller.tabs.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
