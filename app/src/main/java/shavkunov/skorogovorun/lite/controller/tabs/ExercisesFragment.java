@@ -1,8 +1,10 @@
 package shavkunov.skorogovorun.lite.controller.tabs;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +19,9 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import shavkunov.skorogovorun.lite.R;
+import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
@@ -66,6 +68,9 @@ public class ExercisesFragment extends Fragment {
         @BindView(R.id.eCard_countTitle)
         TextView eCardCount;
 
+        @BindView(R.id.eCard_button)
+        FloatingActionButton eCardButton;
+
         private View itemView;
 
         public ExercisesHolder(View itemView) {
@@ -75,7 +80,7 @@ public class ExercisesFragment extends Fragment {
         }
     }
 
-    private class ExercisesAdapter extends RecyclerView.Adapter<ExercisesHolder> {
+    public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesHolder> {
 
         @Override
         public ExercisesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -88,11 +93,21 @@ public class ExercisesFragment extends Fragment {
         public void onBindViewHolder(ExercisesHolder holder, int position) {
             switch (position) {
                 case 0:
-                    setImage(holder, R.drawable.forest);
                     holder.eCardTitle.setText(R.string.tongueTwisters);
+                    setImage(holder, R.drawable.forest);
                     holder.eCardCount.setText("100 скороговорок"); // В будущем будет расчет кол-ва скороговорок
+                    holder.eCardButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setIntent(TongueTwistersActivity.class);
+                        }
+                    });
                     break;
             }
+        }
+
+        private void setIntent(Class<?> cls) {
+            startActivity(new Intent(getContext(), cls));
         }
 
         private void setImage(ExercisesHolder holder, @DrawableRes int imageRes) {
