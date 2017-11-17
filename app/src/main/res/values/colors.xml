@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#F5F5F5</color>
     <color name="colorAccent">#E35539</color>
     <color name="colorBottomBarInActive">#263238</color>
+    <color name="colorFavoriteButton">#FF6666</color>
 </resources>
