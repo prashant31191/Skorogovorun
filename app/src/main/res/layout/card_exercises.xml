@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_exercises"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:layout_margin="10dp"
-    card_view:cardCornerRadius="8dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/standard_dimen"
+    card_view:cardCornerRadius="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/eCard_image"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_row="0"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/forest" />
+
+        <TextView
+            android:id="@+id/eCard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_dimen"
+            android:layout_row="0"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="Item" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/eCard_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/standard_dimen"
+            android:layout_row="1"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/play"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/eCard_countTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:layout_margin="@dimen/standard_dimen"
+            android:layout_row="1"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="154 скороговорки"/>
+    </GridLayout>
 </android.support.v7.widget.CardView>
