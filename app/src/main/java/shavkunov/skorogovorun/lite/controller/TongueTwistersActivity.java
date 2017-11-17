@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +33,12 @@ public class TongueTwistersActivity extends AppCompatActivity {
     }
 
     private void setTongueRecyclerView() {
-        tongueScrollView.setAdapter(new TongueAdapter());
+        InfiniteScrollAdapter wrapperAdapter = InfiniteScrollAdapter.wrap(new TongueAdapter());
+        tongueScrollView.setAdapter(wrapperAdapter);
+        tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
+                .setMaxScale(1.0f)
+                .setMinScale(0.8f)
+                .build());
     }
 
     public class TongueHolder extends RecyclerView.ViewHolder {
