@@ -14,12 +14,6 @@
 
     <tab
         activeColor="@color/colorAccent"
-        icon="@drawable/heart"
-        id="@+id/tab_favorites"
-        inActiveColor="@color/colorBottomBarInActive" />
-
-    <tab
-        activeColor="@color/colorAccent"
         icon="@drawable/settings"
         id="@+id/tab_settings"
         inActiveColor="@color/colorBottomBarInActive" />

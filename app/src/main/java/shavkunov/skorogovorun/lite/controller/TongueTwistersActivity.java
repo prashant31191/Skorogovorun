@@ -30,7 +30,6 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.controller.tabs.CoursesFragment;
 import shavkunov.skorogovorun.lite.controller.tabs.ExercisesFragment;
-import shavkunov.skorogovorun.lite.controller.tabs.FavoritesFragment;
 import shavkunov.skorogovorun.lite.controller.tabs.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.tab_course:
                         fragment = CoursesFragment.newInstance();
                         toolbarTitle = getString(R.string.courses);
-                        break;
-                    case R.id.tab_favorites:
-                        fragment = FavoritesFragment.newInstance();
-                        toolbarTitle = getString(R.string.favorites);
                         break;
                     case R.id.tab_settings:
                         fragment = SettingsFragment.newInstance();
