@@ -2,6 +2,7 @@ package shavkunov.skorogovorun.lite.controller;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -35,18 +36,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tongue_twisters);
         ButterKnife.bind(this);
-        setTongueRecyclerView();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        int lastPosition = sharedPreferences.getInt(KEY_LAST_PATTER, 0);
-        if (lastPosition != 0) {
-            tongueScrollView.smoothScrollToPosition(lastPosition);
-        }
+        setTongueRecyclerView();
     }
 
     private void setTongueRecyclerView() {
-        InfiniteScrollAdapter wrapperAdapter = InfiniteScrollAdapter.wrap(new TongueAdapter());
-        tongueScrollView.setAdapter(wrapperAdapter);
+        tongueScrollView.setAdapter(new TongueAdapter());
+        tongueScrollView.scrollToPosition(sharedPreferences.getInt(KEY_LAST_PATTER, 0));
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.8f)
@@ -90,28 +86,29 @@ public class TongueTwistersActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(TongueHolder holder, int position) {
             // На время, для тестирования
-            Glide.with(TongueTwistersActivity.this)
-                    .load(R.drawable.forest)
-                    .into(holder.tCardImage);
 
-            String title;
+            String title = null;
 
             switch (position) {
                 case 0:
-                    title = "Тридцать три корабля лавировали лавировали, да не вылавировали";
+                    title = "Ма-ма-ма, кота зовут Кузьма";
                     break;
                 case 1:
-                    title = "Шла Саша по шоссе и сосала сушку";
+                    title = "Жа-жа-жа, есть иголки у ежа";
                     break;
-                default:
-                    title = "Шли сорок мышей нашли сорок грошей";
             }
             holder.tCardTitle.setText(title);
         }
 
+        private void setImage(TongueHolder holder, @DrawableRes int imgRes) {
+            Glide.with(TongueTwistersActivity.this)
+                    .load(imgRes)
+                    .into(holder.tCardImage);
+        }
+
         @Override
         public int getItemCount() {
-            return 5;
+            return 2;
         }
     }
 }

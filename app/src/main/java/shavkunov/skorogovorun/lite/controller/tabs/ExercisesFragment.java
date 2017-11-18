@@ -71,6 +71,9 @@ public class ExercisesFragment extends Fragment {
         @BindView(R.id.eCard_button)
         FloatingActionButton eCardButton;
 
+        @BindView(R.id.eCard_date)
+        TextView eCardDate;
+
         private View itemView;
 
         public ExercisesHolder(View itemView) {
@@ -96,6 +99,7 @@ public class ExercisesFragment extends Fragment {
                     holder.eCardTitle.setText(R.string.tongueTwisters);
                     setImage(holder, R.drawable.forest);
                     holder.eCardCount.setText("100 скороговорок"); // В будущем будет расчет кол-ва скороговорок
+                    holder.eCardDate.setText("Последний визит: 17 минут назад");
                     holder.eCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
