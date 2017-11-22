@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -127,6 +129,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
         public void onBindViewHolder(TongueHolder holder, int position) {
             Glide.with(TongueTwistersActivity.this)
                     .load(patters.get(position).getImage())
+                    .apply(new RequestOptions()
+                            .error(R.drawable.error)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(holder.tCardImage);
             holder.tCardTitle.setText(patters.get(position).getTitle());
             String sounds = getString(R.string.letters) + " " +
