@@ -20,21 +20,40 @@
             android:orientation="vertical"
             android:padding="1dp">
 
-            <com.sackcentury.shinebuttonlib.ShineButton
-                android:id="@+id/tCard_favorite_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end"
-                android:layout_margin="@dimen/card_dimen"
-                android:src="@android:color/darker_gray"
-                app:allow_random_color="false"
-                app:btn_color="@android:color/darker_gray"
-                app:btn_fill_color="@color/colorFavoriteButton"
-                app:click_animation_duration="10"
-                app:shine_animation_duration="1000"
-                app:shine_count="10"
-                app:shine_turn_angle="40"
-                app:siShape="@raw/heart" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_dimen">
+
+                <TextView
+                    android:layout_margin="@dimen/card_dimen"
+                    android:id="@+id/tCard_sounds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sounds_size"
+                    tools:text="Буквы: Л, Р, К"/>
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:id="@+id/tCard_favorite_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="@dimen/card_dimen"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:color/darker_gray"
+                    app:allow_random_color="false"
+                    app:btn_color="@android:color/darker_gray"
+                    app:btn_fill_color="@color/colorFavoriteButton"
+                    app:click_animation_duration="10"
+                    app:shine_animation_duration="1000"
+                    app:shine_count="10"
+                    app:shine_turn_angle="40"
+                    app:siShape="@raw/heart" />
+            </RelativeLayout>
 
             <ScrollView
                 android:layout_width="match_parent"

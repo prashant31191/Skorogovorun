@@ -8,4 +8,5 @@
     <string name="countPatters">Всего скороговорок:</string>
     <string name="no_connection">Нет соединения</string>
     <string name="check_your_connection">Проверьте ваше интернет-соединение и попытайтесь снова</string>
+    <string name="letters">Буквы:</string>
 </resources>

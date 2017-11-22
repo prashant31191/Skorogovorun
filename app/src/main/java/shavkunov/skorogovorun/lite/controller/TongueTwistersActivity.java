@@ -99,6 +99,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
         @BindView(R.id.tCard_title)
         TextView tCardTitle;
 
+        @BindView(R.id.tCard_sounds)
+        TextView tCardSounds;
+
         public TongueHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -121,6 +124,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
                     .load(patters.get(position).getImage())
                     .into(holder.tCardImage);
             holder.tCardTitle.setText(patters.get(position).getTitle());
+            String sounds = getString(R.string.letters) + " " +
+                    patters.get(position).getSounds();
+            holder.tCardSounds.setText(sounds);
         }
 
         @Override

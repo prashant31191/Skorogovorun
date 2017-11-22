@@ -32,6 +32,7 @@ public class ExercisesFragment extends Fragment {
     public static final String EXTRA_PATTERS = "extraPatters";
 
     private Unbinder unbinder;
+    private Parcelable[] patters;
 
     @BindView(R.id.exercises_recycler_view)
     RecyclerView exercisesRecyclerView;
@@ -45,8 +46,16 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         unbinder = ButterKnife.bind(this, view);
+        getArgumentsFromActivity();
         setExercisesRecyclerView();
         return view;
+    }
+
+    private void getArgumentsFromActivity() {
+        Bundle bundle = ExercisesFragment.this.getArguments();
+        if (bundle != null) {
+            patters = bundle.getParcelableArray(MainActivity.DOWNLOAD_PATTERS);
+        }
     }
 
     private void setExercisesRecyclerView() {
@@ -74,6 +83,9 @@ public class ExercisesFragment extends Fragment {
 
         @BindView(R.id.eCard_date)
         TextView eCardDate;
+
+        @BindView(R.id.eCard_countTitle)
+        TextView eCardCountTitle;
 
         private View itemView;
 
@@ -106,17 +118,21 @@ public class ExercisesFragment extends Fragment {
                             setIntent(TongueTwistersActivity.class);
                         }
                     });
+
+                    String count;
+                    if (patters.length != 0) {
+                        count = getString(R.string.countPatters) + " " +
+                                patters.length;
+                    } else {
+                        count = " ";
+                    }
+                    holder.eCardCountTitle.setText(count);
+
                     break;
             }
         }
 
         private void setIntent(Class<?> cls) {
-            Parcelable[] patters = null;
-            Bundle bundle = ExercisesFragment.this.getArguments();
-            if (bundle != null) {
-                patters = bundle.getParcelableArray(MainActivity.DOWNLOAD_PATTERS);
-            }
-
             Intent intent = new Intent(getContext(), cls);
             intent.putExtra(EXTRA_PATTERS, patters);
             startActivity(intent);
