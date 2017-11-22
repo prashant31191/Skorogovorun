@@ -32,6 +32,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private List<Patter> patters;
+    private boolean isInternet;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
@@ -56,6 +57,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
             for (Parcelable parcelable : p) {
                 patters.add((Patter) parcelable);
             }
+            isInternet = true;
         }
 
         ButterKnife.bind(this);
@@ -84,8 +86,11 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        int lastPosition = tongueScrollView.getCurrentItem();
-        sharedPreferences.edit().putInt(KEY_LAST_PATTER, lastPosition).apply();
+
+        if (isInternet) {
+            int lastPosition = tongueScrollView.getCurrentItem();
+            sharedPreferences.edit().putInt(KEY_LAST_PATTER, lastPosition).apply();
+        }
     }
 
     public class TongueHolder extends RecyclerView.ViewHolder {
