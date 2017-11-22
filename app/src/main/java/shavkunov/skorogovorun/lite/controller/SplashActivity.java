@@ -28,16 +28,21 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         patterTask = (PatterTask) new PatterTask().execute();
         progressBar.showNow();
+        final Handler handler = new Handler();
 
-        new Handler().postDelayed(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                i.putExtra(EXTRA_PATTERS, patterTask.getPatters());
-                startActivity(i);
-                finish();
+                if (patterTask.getStatus().toString().equals("FINISHED")) {
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                    i.putExtra(EXTRA_PATTERS, patterTask.getPatters());
+                    startActivity(i);
+                    finish();
+                } else {
+                    handler.post(this);
+                }
             }
-        }, 3500);
+        });
     }
 
     @Override

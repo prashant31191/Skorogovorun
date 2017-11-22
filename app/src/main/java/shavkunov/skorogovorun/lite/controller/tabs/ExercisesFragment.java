@@ -120,7 +120,7 @@ public class ExercisesFragment extends Fragment {
                     });
 
                     String count;
-                    if (patters.length != 0) {
+                    if (patters != null) {
                         count = getString(R.string.countPatters) + " " +
                                 patters.length;
                     } else {
