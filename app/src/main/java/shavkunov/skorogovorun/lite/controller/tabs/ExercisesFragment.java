@@ -3,6 +3,7 @@ package shavkunov.skorogovorun.lite.controller.tabs;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -21,11 +22,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import shavkunov.skorogovorun.lite.R;
+import shavkunov.skorogovorun.lite.controller.MainActivity;
 import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class ExercisesFragment extends Fragment {
+
+    public static final String EXTRA_PATTERS = "extraPatters";
 
     private Unbinder unbinder;
 
@@ -65,9 +69,6 @@ public class ExercisesFragment extends Fragment {
         @BindView(R.id.eCard_title)
         TextView eCardTitle;
 
-        @BindView(R.id.eCard_countTitle)
-        TextView eCardCount;
-
         @BindView(R.id.eCard_button)
         FloatingActionButton eCardButton;
 
@@ -98,7 +99,6 @@ public class ExercisesFragment extends Fragment {
                 case 0:
                     holder.eCardTitle.setText(R.string.tongueTwisters);
                     setImage(holder, R.drawable.forest);
-                    holder.eCardCount.setText("100 скороговорок"); // В будущем будет расчет кол-ва скороговорок
                     holder.eCardDate.setText("Последний визит: 17 минут назад");
                     holder.eCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -111,7 +111,15 @@ public class ExercisesFragment extends Fragment {
         }
 
         private void setIntent(Class<?> cls) {
-            startActivity(new Intent(getContext(), cls));
+            Parcelable[] patters = null;
+            Bundle bundle = ExercisesFragment.this.getArguments();
+            if (bundle != null) {
+                patters = bundle.getParcelableArray(MainActivity.DOWNLOAD_PATTERS);
+            }
+
+            Intent intent = new Intent(getContext(), cls);
+            intent.putExtra(EXTRA_PATTERS, patters);
+            startActivity(intent);
         }
 
         private void setImage(ExercisesHolder holder, @DrawableRes int imageRes) {

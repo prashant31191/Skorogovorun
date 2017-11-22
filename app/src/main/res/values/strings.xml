@@ -5,4 +5,7 @@
     <string name="favorites">Избранное</string>
     <string name="settings">Настройки</string>
     <string name="tongueTwisters">Скороговорки</string>
+    <string name="countPatters">Всего скороговорок:</string>
+    <string name="no_connection">Нет соединения</string>
+    <string name="check_your_connection">Проверьте ваше интернет-соединение и попытайтесь снова</string>
 </resources>

@@ -1,6 +1,8 @@
 package shavkunov.skorogovorun.lite.controller;
 
+import android.os.Parcelable;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +20,10 @@ import shavkunov.skorogovorun.lite.controller.tabs.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String DOWNLOAD_PATTERS = "downloadPatters";
+
     private Fragment fragment;
+    private Parcelable[] patters;
 
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        patters = getIntent().getParcelableArrayExtra(SplashActivity.EXTRA_PATTERS);
         setContentView(R.layout.activity_fragment);
         ButterKnife.bind(this);
         setBottomBar();
@@ -39,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (tabId) {
                     case R.id.tab_home:
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArray(DOWNLOAD_PATTERS, patters);
                         fragment = ExercisesFragment.newInstance();
+                        fragment.setArguments(bundle);
                         toolbarTitle = getString(R.string.exercises);
                         break;
                     case R.id.tab_course:

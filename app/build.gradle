@@ -7,7 +7,7 @@ android {
         applicationId "shavkunov.skorogovorun.lite"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
+        versionCode 29
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -51,4 +51,11 @@ dependencies {
 
     // Shine Button
     compile 'com.sackcentury:shinebutton:0.2.0'
+
+    // HTTP Request
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
+    // Progress Bar
+    compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
 }
