@@ -22,8 +22,8 @@
 
             <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/tCard_favorite_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:layout_margin="@dimen/card_dimen"
                 android:src="@android:color/darker_gray"
@@ -34,7 +34,7 @@
                 app:shine_animation_duration="1000"
                 app:shine_count="10"
                 app:shine_turn_angle="40"
-                app:siShape="@drawable/favorite" />
+                app:siShape="@raw/heart" />
 
             <ScrollView
                 android:layout_width="match_parent"
