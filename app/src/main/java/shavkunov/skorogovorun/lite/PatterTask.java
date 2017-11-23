@@ -20,7 +20,7 @@ public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
     @Override
     protected Patter[] doInBackground(Void... params) {
         try {
-            final String url = "https://api.myjson.com/bins/16l94f";
+            final String url = "https://api.myjson.com/bins/1aixfj";
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Patter[]> responseEntity = restTemplate.getForEntity(url, Patter[].class);

@@ -128,17 +128,28 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(TongueHolder holder, int position) {
-            Glide.with(TongueTwistersActivity.this)
-                    .load(patters.get(position).getImage())
-                    .apply(new RequestOptions()
-                            .error(R.drawable.error)
-                            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(holder.tCardImage);
+            if (patters.get(position).getImage() != null) {
+                holder.tCardImage.setVisibility(View.VISIBLE);
+                Glide.with(TongueTwistersActivity.this)
+                        .load(patters.get(position).getImage())
+                        .apply(new RequestOptions()
+                                .error(R.drawable.error)
+                                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(holder.tCardImage);
+            } else {
+                holder.tCardImage.setVisibility(View.GONE);
+            }
+
             holder.tCardTitle.setText(patters.get(position).getTitle());
-            String sounds = getString(R.string.letters) + " " +
-                    patters.get(position).getSounds();
-            holder.tCardSounds.setText(sounds);
+
+            if (patters.get(position).getSounds() != null) {
+                String sounds = getString(R.string.letters) + " " +
+                        patters.get(position).getSounds();
+                holder.tCardSounds.setText(sounds);
+            } else {
+                holder.tCardSounds.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override
