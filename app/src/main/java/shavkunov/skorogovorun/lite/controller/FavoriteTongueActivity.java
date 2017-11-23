@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -27,14 +30,32 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView favoriteTongueScrollView;
 
+    @BindView(R.id.image_empty)
+    ImageView emptyFavoriteImage;
+
+    @BindView(R.id.title_empty)
+    TextView emptyFavoriteTitle;
+
+    @BindView(R.id.subtitle_empty)
+    TextView emptyFavoriteSubtitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tongue_twisters);
         ButterKnife.bind(this);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         patters = DatabaseLab.get(this).getPatters();
-        setScrollView();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (patters.size() > 0) {
+            setScrollView();
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.zoom)
+                    .into(emptyFavoriteImage);
+            emptyFavoriteTitle.setText(R.string.favorite_title);
+            emptyFavoriteSubtitle.setText(R.string.favorite_tongue_subtitle);
+        }
     }
 
     private void setScrollView() {

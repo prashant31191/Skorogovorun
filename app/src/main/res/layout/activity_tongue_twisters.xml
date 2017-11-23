@@ -12,5 +12,5 @@
         app:dsv_orientation="horizontal" />
 
     <include
-        layout="@layout/no_internet"/>
+        layout="@layout/empty"/>
 </RelativeLayout>

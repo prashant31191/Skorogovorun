@@ -33,13 +33,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
 
-    @BindView(R.id.no_internet_image)
+    @BindView(R.id.image_empty)
     ImageView noInternetImage;
 
-    @BindView(R.id.no_internet_title)
+    @BindView(R.id.title_empty)
     TextView noInternetTitle;
 
-    @BindView(R.id.no_internet_subtitle)
+    @BindView(R.id.subtitle_empty)
     TextView noInternetSubtitle;
 
     @Override
