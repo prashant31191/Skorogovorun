@@ -71,7 +71,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
     }
 
     private void setTongueRecyclerView() {
-        tongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters));
+        tongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters, true));
         tongueScrollView.scrollToPosition(sharedPreferences.getInt(KEY_LAST_PATTER, 0));
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)

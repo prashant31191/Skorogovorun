@@ -58,4 +58,7 @@ dependencies {
 
     // Progress Bar
     compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
+
+    // RecyclerView Animators
+    compile 'jp.wasabeef:recyclerview-animators:2.2.7'
 }

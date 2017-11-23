@@ -25,10 +25,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Patter> patters;
     private Activity activity;
+    private boolean isTongueTwistersActivity;
 
-    public RecyclerViewAdapter(Activity activity, List<Patter> patters) {
+    public RecyclerViewAdapter(Activity activity, List<Patter> patters,
+                               boolean isTongueTwistersActivity) {
         this.activity = activity;
         this.patters = patters;
+        this.isTongueTwistersActivity = isTongueTwistersActivity;
     }
 
     public class TongueHolder extends RecyclerView.ViewHolder {
@@ -80,15 +83,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 if (holder.tCardFavoriteButton.isChecked()) {
-                    DatabaseLab.get(activity).addPatter(new Patter(
-                            patters.get(holder.getAdapterPosition()).getImage(),
-                            patters.get(holder.getAdapterPosition()).getTitle(),
-                            patters.get(holder.getAdapterPosition()).getSounds(),
-                            patters.get(holder.getAdapterPosition()).isFavorite()
-                    ));
+                    if (patters.size() > 0) {
+                        DatabaseLab.get(activity).addPatter(new Patter(
+                                patters.get(holder.getAdapterPosition()).getImage(),
+                                patters.get(holder.getAdapterPosition()).getTitle(),
+                                patters.get(holder.getAdapterPosition()).getSounds(),
+                                patters.get(holder.getAdapterPosition()).isFavorite()
+                        ));
+                    }
                 } else {
                     DatabaseLab.get(activity)
                             .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
+
+                    if (!isTongueTwistersActivity) {
+                        notifyItemRemoved(holder.getAdapterPosition());
+                    }
                 }
             }
         });

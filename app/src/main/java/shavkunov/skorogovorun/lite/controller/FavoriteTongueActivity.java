@@ -10,6 +10,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
 import shavkunov.skorogovorun.lite.model.DatabaseLab;
@@ -32,11 +33,11 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     private void setScrollView() {
-        favoriteTongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters));
+        favoriteTongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters, false));
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.8f)
                 .build());
+        favoriteTongueScrollView.setItemAnimator(new SlideInUpAnimator());
     }
-
 }
