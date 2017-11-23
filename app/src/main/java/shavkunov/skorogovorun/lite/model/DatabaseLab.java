@@ -17,7 +17,8 @@ import shavkunov.skorogovorun.lite.database.SkorDBSchema.SkorTable.Cols;
 
 public class DatabaseLab {
 
-    public static final String EXCEPTION = "SQLiteException";
+    private static final String GET_PATTERS_EXCEPTION = "getPattersException";
+    private static final String GET_PATTER_EXCEPTION = "getPatterException";
 
     private static DatabaseLab databaseLab;
     private SQLiteDatabase database;
@@ -78,12 +79,32 @@ public class DatabaseLab {
                 cursor.moveToNext();
             }
         } catch (SQLiteException e) {
-            Log.e(EXCEPTION,
+            Log.e(GET_PATTERS_EXCEPTION,
                     "The exception was caught in getPatters() method in DatabaseLab.java");
         } finally {
             cursor.close();
         }
 
         return patters;
+    }
+
+    public Patter getPatter(String title) {
+        SkorCursorWrapper cursor = queryPatters(Cols.TITLE + " = ?", new String[] {title});
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getPatter();
+        } catch (SQLiteException e) {
+            Log.e(GET_PATTER_EXCEPTION,
+                    "The exception was caught in getPatter() method in DatabaseLab.java");
+        } finally {
+            cursor.close();
+        }
+
+        return null;
     }
 }

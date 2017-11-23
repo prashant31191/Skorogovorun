@@ -64,10 +64,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final TongueHolder holder, int position) {
-        if (patters.get(position).getImage() != null) {
+        holder.tCardTitle.setText(patters.get(position).getTitle());
+        setFavoriteButton(holder);
+        setImage(holder);
+        setSounds(holder);
+    }
+
+    private void setImage(TongueHolder holder) {
+        if (patters.get(holder.getAdapterPosition()).getImage() != null) {
             holder.tCardImage.setVisibility(View.VISIBLE);
             Glide.with(activity)
-                    .load(patters.get(position).getImage())
+                    .load(patters.get(holder.getAdapterPosition()).getImage())
                     .apply(new RequestOptions()
                             .error(R.drawable.error)
                             .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
@@ -76,35 +83,43 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         } else {
             holder.tCardImage.setVisibility(View.GONE);
         }
+    }
 
-        holder.tCardTitle.setText(patters.get(position).getTitle());
+    private void setFavoriteButton(final TongueHolder holder) {
+        holder.tCardFavoriteButton.setChecked(patters.get(holder.getAdapterPosition()).isFavorite());
+
+        if (isTongueTwistersActivity) {
+            // Существует ли в БД скороговорка с таким же текстом
+            Patter patter = DatabaseLab.get(activity)
+                    .getPatter(patters.get(holder.getAdapterPosition()).getTitle());
+
+            if (patter != null) {
+                patters.get(holder.getAdapterPosition()).setFavorite(patter.isFavorite());
+                holder.tCardFavoriteButton.setChecked(patter.isFavorite());
+            }
+        }
 
         holder.tCardFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (holder.tCardFavoriteButton.isChecked()) {
-                    if (patters.size() > 0) {
-                        DatabaseLab.get(activity).addPatter(new Patter(
-                                patters.get(holder.getAdapterPosition()).getImage(),
-                                patters.get(holder.getAdapterPosition()).getTitle(),
-                                patters.get(holder.getAdapterPosition()).getSounds(),
-                                patters.get(holder.getAdapterPosition()).isFavorite()
-                        ));
-                    }
+                    DatabaseLab.get(activity).addPatter(new Patter(
+                            patters.get(holder.getAdapterPosition()).getImage(),
+                            patters.get(holder.getAdapterPosition()).getTitle(),
+                            patters.get(holder.getAdapterPosition()).getSounds(),
+                            true));
                 } else {
                     DatabaseLab.get(activity)
                             .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
-
-                    if (!isTongueTwistersActivity) {
-                        notifyItemRemoved(holder.getAdapterPosition());
-                    }
                 }
             }
         });
+    }
 
-        if (patters.get(position).getSounds() != null) {
+    private void setSounds(TongueHolder holder) {
+        if (patters.get(holder.getAdapterPosition()).getSounds() != null) {
             String sounds = activity.getString(R.string.letters) + " " +
-                    patters.get(position).getSounds();
+                    patters.get(holder.getAdapterPosition()).getSounds();
             holder.tCardSounds.setText(sounds);
         } else {
             holder.tCardSounds.setVisibility(View.INVISIBLE);

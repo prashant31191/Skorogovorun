@@ -12,7 +12,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
 import shavkunov.skorogovorun.lite.model.DatabaseLab;
@@ -20,7 +19,7 @@ import shavkunov.skorogovorun.lite.model.Patter;
 
 public class FavoriteTongueActivity extends AppCompatActivity {
 
-    private static final String KEY_LAST_PATTER = "lastPatter";
+    private static final String KEY_LAST_PATTER_FAVORITE = "lastPatterFavorite";
 
     private List<Patter> patters;
     private SharedPreferences preferences;
@@ -40,12 +39,11 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
     private void setScrollView() {
         favoriteTongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters, false));
-        favoriteTongueScrollView.scrollToPosition(preferences.getInt(KEY_LAST_PATTER, 0));
+        favoriteTongueScrollView.scrollToPosition(preferences.getInt(KEY_LAST_PATTER_FAVORITE, 0));
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.8f)
                 .build());
-        favoriteTongueScrollView.setItemAnimator(new SlideInUpAnimator());
     }
 
     @Override
@@ -53,6 +51,6 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         super.onPause();
 
         int lastPosition = favoriteTongueScrollView.getCurrentItem();
-        preferences.edit().putInt(KEY_LAST_PATTER, lastPosition).apply();
+        preferences.edit().putInt(KEY_LAST_PATTER_FAVORITE, lastPosition).apply();
     }
 }
