@@ -64,7 +64,7 @@ public class DatabaseLab {
         return new SkorCursorWrapper(cursor);
     }
 
-    private List<Patter> getPatters() {
+    public List<Patter> getPatters() {
         List<Patter> patters = new ArrayList<>();
         SkorCursorWrapper cursor = queryPatters(null, null);
 
