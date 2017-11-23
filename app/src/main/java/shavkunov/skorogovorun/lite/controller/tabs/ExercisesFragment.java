@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -141,7 +143,9 @@ public class ExercisesFragment extends Fragment {
         private void setImage(ExercisesHolder holder, @DrawableRes int imageRes) {
             Glide.with(holder.itemView)
                     .load(imageRes)
-                    .apply(bitmapTransform(new ColorFilterTransformation(Color.argb(210, 66, 66, 66))))
+                    .apply(RequestOptions.bitmapTransform(
+                            new ColorFilterTransformation(Color.argb(210, 66, 66, 66)))
+                            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL))
                     .into(holder.eCardImage);
         }
 

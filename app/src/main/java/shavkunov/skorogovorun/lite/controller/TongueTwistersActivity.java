@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -131,6 +132,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
                     .load(patters.get(position).getImage())
                     .apply(new RequestOptions()
                             .error(R.drawable.error)
+                            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(holder.tCardImage);
             holder.tCardTitle.setText(patters.get(position).getTitle());
