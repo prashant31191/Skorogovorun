@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import shavkunov.skorogovorun.lite.R;
+import shavkunov.skorogovorun.lite.controller.FavoriteTongueActivity;
 import shavkunov.skorogovorun.lite.controller.MainActivity;
 import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
 
@@ -83,6 +84,9 @@ public class ExercisesFragment extends Fragment {
         @BindView(R.id.eCard_button)
         FloatingActionButton eCardButton;
 
+        @BindView(R.id.eCard_favorite_button)
+        FloatingActionButton eCardFavoriteButton;
+
         @BindView(R.id.eCard_date)
         TextView eCardDate;
 
@@ -118,6 +122,12 @@ public class ExercisesFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             setIntent(TongueTwistersActivity.class);
+                        }
+                    });
+                    holder.eCardFavoriteButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            setIntent(FavoriteTongueActivity.class);
                         }
                     });
 

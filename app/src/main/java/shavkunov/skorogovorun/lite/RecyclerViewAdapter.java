@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shavkunov.skorogovorun.lite.model.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TongueHolder> {
@@ -59,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(TongueHolder holder, int position) {
+    public void onBindViewHolder(final TongueHolder holder, int position) {
         if (patters.get(position).getImage() != null) {
             holder.tCardImage.setVisibility(View.VISIBLE);
             Glide.with(activity)
@@ -74,6 +75,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         holder.tCardTitle.setText(patters.get(position).getTitle());
+
+        holder.tCardFavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.tCardFavoriteButton.isChecked()) {
+                    DatabaseLab.get(activity).addPatter(new Patter(
+                            patters.get(holder.getAdapterPosition()).getImage(),
+                            patters.get(holder.getAdapterPosition()).getTitle(),
+                            patters.get(holder.getAdapterPosition()).getSounds(),
+                            patters.get(holder.getAdapterPosition()).isFavorite()
+                    ));
+                } else {
+                    DatabaseLab.get(activity)
+                            .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
+                }
+            }
+        });
 
         if (patters.get(position).getSounds() != null) {
             String sounds = activity.getString(R.string.letters) + " " +

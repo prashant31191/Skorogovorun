@@ -12,6 +12,13 @@ public class Patter implements Parcelable {
 
     public Patter() {}
 
+    public Patter(String image, String title, String sounds, boolean isFavorite) {
+        this.image = image;
+        this.title = title;
+        this.sounds = sounds;
+        this.isFavorite = isFavorite;
+    }
+
     public Patter(Parcel in) {
         image = in.readString();
         title = in.readString();

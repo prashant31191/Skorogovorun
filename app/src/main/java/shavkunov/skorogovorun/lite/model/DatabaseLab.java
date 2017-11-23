@@ -21,7 +21,6 @@ public class DatabaseLab {
 
     private static DatabaseLab databaseLab;
     private SQLiteDatabase database;
-    private Context context;
 
     public static DatabaseLab get(Context context) {
         if (databaseLab == null) {
@@ -31,7 +30,6 @@ public class DatabaseLab {
     }
 
     private DatabaseLab(Context context) {
-        this.context = context.getApplicationContext();
         database = new SkorBaseHelper(context)
                 .getWritableDatabase();
     }
@@ -46,9 +44,14 @@ public class DatabaseLab {
         return values;
     }
 
-    private void addPatter(Patter patter) {
+    public void addPatter(Patter patter) {
         ContentValues values = getContentValues(patter);
         database.insert(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, values);
+    }
+
+    public void deletePatter(String patterTitle) {
+        database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE,
+                Cols.TITLE + " = ?", new String[]{patterTitle});
     }
 
     private SkorCursorWrapper queryPatters(String whereClause, String[] whereArgs) {
