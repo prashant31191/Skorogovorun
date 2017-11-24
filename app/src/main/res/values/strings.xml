@@ -11,4 +11,6 @@
     <string name="letters">Буквы:</string>
     <string name="favorite_title">Пока что ничего нет</string>
     <string name="favorite_tongue_subtitle">Добавьте хотя бы одну скороговорку</string>
+    <string name="failure">Неудача</string>
+    <string name="failure_message">Интернет-соединение находится в оффлайн режиме</string>
 </resources>

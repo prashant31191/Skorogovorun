@@ -3,7 +3,6 @@ package shavkunov.skorogovorun.lite.controller.tabs;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -25,17 +24,11 @@ import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.controller.FavoriteTongueActivity;
-import shavkunov.skorogovorun.lite.controller.MainActivity;
 import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
-
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class ExercisesFragment extends Fragment {
 
-    public static final String EXTRA_PATTERS = "extraPatters";
-
     private Unbinder unbinder;
-    private Parcelable[] patters;
 
     @BindView(R.id.exercises_recycler_view)
     RecyclerView exercisesRecyclerView;
@@ -49,16 +42,8 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         unbinder = ButterKnife.bind(this, view);
-        getArgumentsFromActivity();
         setExercisesRecyclerView();
         return view;
-    }
-
-    private void getArgumentsFromActivity() {
-        Bundle bundle = ExercisesFragment.this.getArguments();
-        if (bundle != null) {
-            patters = bundle.getParcelableArray(MainActivity.DOWNLOAD_PATTERS);
-        }
     }
 
     private void setExercisesRecyclerView() {
@@ -89,9 +74,6 @@ public class ExercisesFragment extends Fragment {
 
         @BindView(R.id.eCard_date)
         TextView eCardDate;
-
-        @BindView(R.id.eCard_countTitle)
-        TextView eCardCountTitle;
 
         private View itemView;
 
@@ -131,22 +113,12 @@ public class ExercisesFragment extends Fragment {
                         }
                     });
 
-                    String count;
-                    if (patters != null) {
-                        count = getString(R.string.countPatters) + " " +
-                                patters.length;
-                    } else {
-                        count = " ";
-                    }
-                    holder.eCardCountTitle.setText(count);
-
                     break;
             }
         }
 
         private void setIntent(Class<?> cls) {
             Intent intent = new Intent(getContext(), cls);
-            intent.putExtra(EXTRA_PATTERS, patters);
             startActivity(intent);
         }
 

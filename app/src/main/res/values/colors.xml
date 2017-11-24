@@ -6,4 +6,5 @@
     <color name="colorBottomBarInActive">#263238</color>
     <color name="colorFavoriteButton">#FF6666</color>
     <color name="colorProgressBar">#FF8C73</color>
+    <color name="colorSnakeBackground">#2F2F2F</color>
 </resources>

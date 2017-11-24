@@ -13,4 +13,7 @@
 
     <include
         layout="@layout/empty"/>
+
+    <include
+        layout="@layout/progress_bar"/>
 </RelativeLayout>
