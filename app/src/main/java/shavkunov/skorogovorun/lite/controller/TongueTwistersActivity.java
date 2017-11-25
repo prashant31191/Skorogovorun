@@ -1,5 +1,6 @@
 package shavkunov.skorogovorun.lite.controller;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,6 +19,7 @@ import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +33,7 @@ import shavkunov.skorogovorun.lite.model.Patter;
 public class TongueTwistersActivity extends AppCompatActivity {
 
     private static final String KEY_LAST_PATTER = "lastPatter";
+    public static final String EXTRA_DATE_TONGUE = "extraDateTongue";
 
     private SharedPreferences sharedPreferences;
     private List<Patter> patters;
@@ -159,5 +162,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
         if (task != null) {
             task.cancel(true);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE_TONGUE, new Date().getTime());
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 }

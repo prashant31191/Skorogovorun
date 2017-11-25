@@ -1,5 +1,6 @@
 package shavkunov.skorogovorun.lite.controller;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,6 +24,7 @@ import shavkunov.skorogovorun.lite.model.Patter;
 public class FavoriteTongueActivity extends AppCompatActivity {
 
     private static final String KEY_LAST_PATTER_FAVORITE = "lastPatterFavorite";
+    public static final String EXTRA_DATE_FAVORITE = "extraDateFavorite";
 
     private List<Patter> patters;
     private SharedPreferences preferences;
@@ -43,7 +46,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tongue_twisters);
         ButterKnife.bind(this);
-        patters = DatabaseLab.get(this).getPatters();
+        patters = DatabaseLab.getInstance(this).getPatters();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (patters.size() > 0) {
@@ -67,8 +70,15 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         int lastPosition = favoriteTongueScrollView.getCurrentItem();
         preferences.edit().putInt(KEY_LAST_PATTER_FAVORITE, lastPosition).apply();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE_FAVORITE, new Date().getTime());
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 }

@@ -21,7 +21,7 @@ public class DatabaseLab {
     private static DatabaseLab databaseLab;
     private SQLiteDatabase database;
 
-    public static DatabaseLab get(Context context) {
+    public static DatabaseLab getInstance(Context context) {
         if (databaseLab == null) {
             databaseLab = new DatabaseLab(context);
         }

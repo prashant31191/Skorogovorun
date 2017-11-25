@@ -90,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if (isTongueTwistersActivity) {
             // Существует ли в БД скороговорка с таким же текстом
-            Patter patter = DatabaseLab.get(activity)
+            Patter patter = DatabaseLab.getInstance(activity)
                     .getPatter(patters.get(holder.getAdapterPosition()).getTitle());
 
             if (patter != null) {
@@ -103,13 +103,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 if (holder.tCardFavoriteButton.isChecked()) {
-                    DatabaseLab.get(activity).addPatter(new Patter(
+                    DatabaseLab.getInstance(activity).addPatter(new Patter(
                             patters.get(holder.getAdapterPosition()).getImage(),
                             patters.get(holder.getAdapterPosition()).getTitle(),
                             patters.get(holder.getAdapterPosition()).getSounds(),
                             true));
                 } else {
-                    DatabaseLab.get(activity)
+                    DatabaseLab.getInstance(activity)
                             .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
                 }
             }
