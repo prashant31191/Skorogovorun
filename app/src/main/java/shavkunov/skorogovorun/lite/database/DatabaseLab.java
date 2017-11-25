@@ -53,6 +53,10 @@ public class DatabaseLab {
                 Cols.TITLE + " = ?", new String[]{patterTitle});
     }
 
+    public void deleteAllPatters() {
+        database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, null);
+    }
+
     private SkorCursorWrapper queryPatters(String whereClause, String[] whereArgs) {
         Cursor cursor = database.query(
                 SkorDBSchema.SkorTable.FAVORITE_TONGUE,

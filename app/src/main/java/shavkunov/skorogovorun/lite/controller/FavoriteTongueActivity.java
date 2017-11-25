@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -28,6 +31,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
     private List<Patter> patters;
     private SharedPreferences preferences;
+    private RecyclerViewAdapter adapter;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView favoriteTongueScrollView;
@@ -52,14 +56,19 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         if (patters.size() > 0) {
             setScrollView();
         } else {
-            emptyFavoriteImage.setImageResource(R.drawable.zoom);
-            emptyFavoriteTitle.setText(R.string.favorite_title);
-            emptyFavoriteSubtitle.setText(R.string.favorite_tongue_subtitle);
+            showHideEmptyViews();
         }
     }
 
+    private void showHideEmptyViews() {
+        emptyFavoriteImage.setImageResource(R.drawable.zoom);
+        emptyFavoriteTitle.setText(R.string.favorite_title);
+        emptyFavoriteSubtitle.setText(R.string.favorite_tongue_subtitle);
+    }
+
     private void setScrollView() {
-        favoriteTongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters, false));
+        adapter = new RecyclerViewAdapter(this, patters, false);
+        favoriteTongueScrollView.setAdapter(adapter);
         favoriteTongueScrollView.scrollToPosition(preferences.getInt(KEY_LAST_PATTER_FAVORITE, 0));
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
@@ -80,5 +89,31 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_DATE_FAVORITE, new Date().getTime());
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_favorite, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_clear:
+                if (patters.size() > 0) {
+                    DatabaseLab.getInstance(this).deleteAllPatters();
+                    patters.clear();
+                    adapter.notifyDataSetChanged();
+                    showHideEmptyViews();
+                } else {
+                    Toast.makeText(this, R.string.nothing_to_delete, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

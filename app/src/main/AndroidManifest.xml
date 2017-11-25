@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".controller.TongueTwistersActivity"
-            android:label="@string/tongueTwisters" />
+            android:label="@string/tongue_twisters" />
         <activity android:name=".controller.FavoriteTongueActivity" />
     </application>
 

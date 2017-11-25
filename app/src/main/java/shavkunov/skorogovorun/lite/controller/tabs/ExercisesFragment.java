@@ -132,7 +132,7 @@ public class ExercisesFragment extends Fragment {
         public void onBindViewHolder(final ExercisesHolder holder, int position) {
             switch (position) {
                 case 0:
-                    holder.eCardTitle.setText(R.string.tongueTwisters);
+                    holder.eCardTitle.setText(R.string.tongue_twisters);
                     setImage(holder, R.drawable.forest);
 
                     handler = new Handler();
@@ -180,7 +180,7 @@ public class ExercisesFragment extends Fragment {
             } else if (seconds < 60) {
                 result = String.valueOf(new StringBuilder()
                         .append(getString(R.string.last_visit)).append(" ")
-                        .append(getString(R.string.lessThanAMinute)).append(" ")
+                        .append(getString(R.string.less_than_a_minute)).append(" ")
                         .append(getString(R.string.ago)));
             } else if (seconds < 3600) {
                 result = String.valueOf(new StringBuilder()
@@ -206,7 +206,7 @@ public class ExercisesFragment extends Fragment {
             } else if (seconds < 259200) {
                 result = String.valueOf(new StringBuilder()
                         .append(getString(R.string.last_visit)).append(" ")
-                        .append(getString(R.string.theDayBeforeYesterday)));
+                        .append(getString(R.string.the_day_before_yesterday)));
             } else {
                 result = String.valueOf(new StringBuilder()
                         .append(getString(R.string.last_visit)).append(" ")

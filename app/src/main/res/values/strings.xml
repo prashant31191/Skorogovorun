@@ -4,7 +4,7 @@
     <string name="courses">Курсы</string>
     <string name="favorites">Избранное</string>
     <string name="settings">Настройки</string>
-    <string name="tongueTwisters">Скороговорки</string>
+    <string name="tongue_twisters">Скороговорки</string>
     <string name="no_connection">Нет соединения</string>
     <string name="check_your_connection">Проверьте ваше интернет-соединение и попытайтесь снова</string>
     <string name="letters">Буквы:</string>
@@ -12,10 +12,12 @@
     <string name="favorite_tongue_subtitle">Добавьте хотя бы одну скороговорку</string>
     <string name="last_visit">Последний визит:</string>
     <string name="minute">мин.</string>
-    <string name="lessThanAMinute">Меньше минуты</string>
+    <string name="less_than_a_minute">Меньше минуты</string>
     <string name="ago">назад</string>
     <string name="hour_two">час.</string>
     <string name="hour">час</string>
     <string name="yesterday">Вчера</string>
-    <string name="theDayBeforeYesterday">Позавчера</string>
+    <string name="the_day_before_yesterday">Позавчера</string>
+    <string name="clear_all">Удалить все записи</string>
+    <string name="nothing_to_delete">Список пуст</string>
 </resources>
