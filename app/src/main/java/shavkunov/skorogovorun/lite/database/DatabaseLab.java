@@ -1,4 +1,4 @@
-package shavkunov.skorogovorun.lite.model;
+package shavkunov.skorogovorun.lite.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,10 +10,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import shavkunov.skorogovorun.lite.database.SkorBaseHelper;
-import shavkunov.skorogovorun.lite.database.SkorCursorWrapper;
-import shavkunov.skorogovorun.lite.database.SkorDBSchema;
 import shavkunov.skorogovorun.lite.database.SkorDBSchema.SkorTable.Cols;
+import shavkunov.skorogovorun.lite.model.Patter;
 
 public class DatabaseLab {
 

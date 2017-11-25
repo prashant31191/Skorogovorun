@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
@@ -86,9 +85,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         noInternetTitle.setVisibility(View.VISIBLE);
                         noInternetSubtitle.setVisibility(View.VISIBLE);
 
-                        Glide.with(TongueTwistersActivity.this)
-                                .load(R.drawable.no_internet)
-                                .into(noInternetImage);
+                        noInternetImage.setImageResource(R.drawable.no_internet);
                         noInternetTitle.setText(R.string.no_connection);
                         noInternetSubtitle.setText(R.string.check_your_connection);
                         noInternetButton.setVisibility(View.VISIBLE);

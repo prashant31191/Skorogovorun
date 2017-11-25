@@ -18,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import shavkunov.skorogovorun.lite.model.DatabaseLab;
+import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TongueHolder> {

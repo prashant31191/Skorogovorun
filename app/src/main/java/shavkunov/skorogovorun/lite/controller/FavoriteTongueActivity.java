@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -17,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
-import shavkunov.skorogovorun.lite.model.DatabaseLab;
+import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
 public class FavoriteTongueActivity extends AppCompatActivity {
@@ -50,9 +49,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         if (patters.size() > 0) {
             setScrollView();
         } else {
-            Glide.with(this)
-                    .load(R.drawable.zoom)
-                    .into(emptyFavoriteImage);
+            emptyFavoriteImage.setImageResource(R.drawable.zoom);
             emptyFavoriteTitle.setText(R.string.favorite_title);
             emptyFavoriteSubtitle.setText(R.string.favorite_tongue_subtitle);
         }
