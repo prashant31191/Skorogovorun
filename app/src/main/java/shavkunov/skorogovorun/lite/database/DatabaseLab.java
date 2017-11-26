@@ -48,12 +48,19 @@ public class DatabaseLab {
         database.insert(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, values);
     }
 
+    public void addPatters(List<Patter> patters) {
+        for (Patter p : patters) {
+            p.setFavorite(true);
+            addPatter(p);
+        }
+    }
+
     public void deletePatter(String patterTitle) {
         database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE,
                 Cols.TITLE + " = ?", new String[]{patterTitle});
     }
 
-    public void deleteAllPatters() {
+    public void deletePatters() {
         database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, null);
     }
 

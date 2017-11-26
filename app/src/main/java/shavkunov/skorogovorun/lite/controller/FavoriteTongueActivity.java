@@ -103,14 +103,19 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_clear:
+                String result;
+
                 if (patters.size() > 0) {
-                    DatabaseLab.getInstance(this).deleteAllPatters();
+                    DatabaseLab.getInstance(this).deletePatters();
                     patters.clear();
                     adapter.notifyDataSetChanged();
                     showHideEmptyViews();
+                    result = getString(R.string.everything_deleted);
                 } else {
-                    Toast.makeText(this, R.string.nothing_to_delete, Toast.LENGTH_SHORT).show();
+                    result = getString(R.string.nothing_to_delete);
                 }
+
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

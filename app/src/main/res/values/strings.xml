@@ -19,5 +19,8 @@
     <string name="yesterday">Вчера</string>
     <string name="the_day_before_yesterday">Позавчера</string>
     <string name="clear_all">Удалить все записи</string>
+    <string name="add_all">Добавить все записи</string>
     <string name="nothing_to_delete">Список пуст</string>
+    <string name="everything_deleted">Все записи были успешно удалены</string>
+    <string name="everything_added">Все записи были успешно добавлены</string>
 </resources>

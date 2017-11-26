@@ -9,9 +9,12 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -28,6 +31,7 @@ import butterknife.OnClick;
 import shavkunov.skorogovorun.lite.PatterTask;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
+import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
 public class TongueTwistersActivity extends AppCompatActivity {
@@ -39,6 +43,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
     private List<Patter> patters;
     private boolean isInternet;
     private PatterTask task;
+    private RecyclerViewAdapter adapter;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
@@ -137,7 +142,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
 
     private void setTongueRecyclerView() {
-        tongueScrollView.setAdapter(new RecyclerViewAdapter(this, patters, true));
+        adapter = new RecyclerViewAdapter(this, patters, true);
+        tongueScrollView.setAdapter(adapter);
         tongueScrollView.scrollToPosition(sharedPreferences.getInt(KEY_LAST_PATTER, 0));
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
@@ -170,5 +176,32 @@ public class TongueTwistersActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_DATE_TONGUE, new Date().getTime());
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_tongue_twisters, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_all:
+                String result;
+
+                if (patters.size() > 0) {
+                    DatabaseLab.getInstance(this).addPatters(patters);
+                    result = getString(R.string.everything_added);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    result = getString(R.string.check_your_connection);
+                }
+
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

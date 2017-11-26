@@ -112,7 +112,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     DatabaseLab.getInstance(activity)
                             .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
                     patters.remove(holder.getAdapterPosition());
-                    notifyDataSetChanged();
+
+                    if (!isTongueTwistersActivity) {
+                        notifyDataSetChanged();
+                    }
                 }
             }
         });
