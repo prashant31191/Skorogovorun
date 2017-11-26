@@ -225,8 +225,7 @@ public class ExercisesFragment extends Fragment {
             Glide.with(holder.itemView)
                     .load(imageRes)
                     .apply(RequestOptions.bitmapTransform(
-                            new ColorFilterTransformation(Color.argb(210, 66, 66, 66)))
-                            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL))
+                            new ColorFilterTransformation(Color.argb(210, 66, 66, 66))))
                     .into(holder.eCardImage);
         }
 

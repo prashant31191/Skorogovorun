@@ -21,7 +21,9 @@
         <activity
             android:name=".controller.TongueTwistersActivity"
             android:label="@string/tongue_twisters" />
-        <activity android:name=".controller.FavoriteTongueActivity" />
+        <activity
+            android:name=".controller.FavoriteTongueActivity"
+            android:label="@string/favorites" />
     </application>
 
 </manifest>
