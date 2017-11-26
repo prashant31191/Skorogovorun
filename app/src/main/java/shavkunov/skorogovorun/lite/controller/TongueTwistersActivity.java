@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import shavkunov.skorogovorun.lite.PatterTask;
 import shavkunov.skorogovorun.lite.R;
-import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
+import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
@@ -43,7 +43,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
     private List<Patter> patters;
     private boolean isInternet;
     private PatterTask task;
-    private RecyclerViewAdapter adapter;
+    private TongueTwistersAdapter adapter;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
@@ -142,7 +142,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
 
     private void setTongueRecyclerView() {
-        adapter = new RecyclerViewAdapter(this, patters, true);
+        adapter = new TongueTwistersAdapter(this, patters, true);
         tongueScrollView.setAdapter(adapter);
         tongueScrollView.scrollToPosition(sharedPreferences.getInt(KEY_LAST_PATTER, 0));
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()

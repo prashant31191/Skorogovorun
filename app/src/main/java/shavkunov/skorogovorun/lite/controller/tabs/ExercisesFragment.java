@@ -213,6 +213,14 @@ public class ExercisesFragment extends Fragment {
                         .append(dateFormat.format(new Date(lastDate))));
             }
 
+            String mistake = String.valueOf(new StringBuilder()
+            .append(getString(R.string.last_visit)).append(" ")
+            .append("1 янв. 1970"));
+
+            if (result.equals(mistake)) {
+                result = " ";
+            }
+
             return result;
         }
 

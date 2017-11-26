@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.R;
-import shavkunov.skorogovorun.lite.RecyclerViewAdapter;
+import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
@@ -31,7 +31,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
     private List<Patter> patters;
     private SharedPreferences preferences;
-    private RecyclerViewAdapter adapter;
+    private TongueTwistersAdapter adapter;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView favoriteTongueScrollView;
@@ -67,7 +67,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     private void setScrollView() {
-        adapter = new RecyclerViewAdapter(this, patters, false);
+        adapter = new TongueTwistersAdapter(this, patters, false);
         favoriteTongueScrollView.setAdapter(adapter);
         favoriteTongueScrollView.scrollToPosition(preferences.getInt(KEY_LAST_PATTER_FAVORITE, 0));
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()

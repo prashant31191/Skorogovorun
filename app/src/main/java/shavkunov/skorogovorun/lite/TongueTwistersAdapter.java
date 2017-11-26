@@ -21,14 +21,14 @@ import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Patter;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TongueHolder> {
+public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAdapter.TongueHolder> {
 
     private List<Patter> patters;
     private Activity activity;
     private boolean isTongueTwistersActivity;
 
-    public RecyclerViewAdapter(Activity activity, List<Patter> patters,
-                               boolean isTongueTwistersActivity) {
+    public TongueTwistersAdapter(Activity activity, List<Patter> patters,
+                                 boolean isTongueTwistersActivity) {
         this.activity = activity;
         this.patters = patters;
         this.isTongueTwistersActivity = isTongueTwistersActivity;
