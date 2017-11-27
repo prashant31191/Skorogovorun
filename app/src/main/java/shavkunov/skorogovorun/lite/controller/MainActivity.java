@@ -81,14 +81,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_asses:
+                setIntent("market://details?id=shavkunov.skorogovorun.lite");
+                return true;
             case R.id.action_download:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://yadi.sk/d/SAqBnk9q3Q5Ze7"));
-                Intent selectedApp = Intent.createChooser(intent, getString(R.string.select_app));
-                startActivity(selectedApp);
+                setIntent("https://yadi.sk/d/SAqBnk9q3Q5Ze7");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setIntent(String uriString) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(uriString));
+        Intent selectedApp = Intent.createChooser(intent, getString(R.string.select_app));
+        startActivity(selectedApp);
     }
 }
