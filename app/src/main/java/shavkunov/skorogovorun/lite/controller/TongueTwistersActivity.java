@@ -200,8 +200,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.action_to_start:
+                if (patters.size() > 0) {
+                    tongueScrollView.smoothScrollToPosition(0);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

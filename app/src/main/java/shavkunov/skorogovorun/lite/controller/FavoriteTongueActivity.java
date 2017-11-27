@@ -117,6 +117,11 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.action_to_start:
+                if (patters.size() > 0) {
+                    favoriteTongueScrollView.smoothScrollToPosition(0);
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
