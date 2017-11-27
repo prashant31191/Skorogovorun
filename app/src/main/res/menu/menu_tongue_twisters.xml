@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_to_start"
-        android:title="@string/toStart"
+        android:title="@string/go_to_start"
         app:showAsAction="withText"/>
 
     <item

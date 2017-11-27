@@ -23,5 +23,7 @@
     <string name="nothing_to_delete">Список пуст</string>
     <string name="everything_deleted">Все записи были успешно удалены</string>
     <string name="everything_added">Все записи были успешно добавлены</string>
-    <string name="toStart">К началу</string>
+    <string name="go_to_start">К началу</string>
+    <string name="download_old_version">Скачать старую версию</string>
+    <string name="select_app">Выберите приложение</string>
 </resources>
