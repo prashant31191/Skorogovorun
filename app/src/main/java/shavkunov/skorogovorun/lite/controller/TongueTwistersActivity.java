@@ -163,7 +163,6 @@ public class TongueTwistersActivity extends AppCompatActivity {
         getPattersFromInternet();
     }
 
-
     private void setTongueRecyclerView() {
         adapter = new TongueTwistersAdapter(this, patters, true);
         tongueScrollView.setAdapter(adapter);
