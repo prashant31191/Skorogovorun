@@ -3,12 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/sort_variant"
+        android:title="@string/sort"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_to_start"
         android:title="@string/go_to_start"
-        app:showAsAction="withText"/>
+        app:showAsAction="withText" />
 
     <item
         android:id="@+id/action_add_all"
         android:title="@string/add_all"
-        app:showAsAction="withText"/>
+        app:showAsAction="withText" />
 </menu>

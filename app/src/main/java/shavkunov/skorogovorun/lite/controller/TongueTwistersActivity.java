@@ -1,5 +1,6 @@
 package shavkunov.skorogovorun.lite.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -7,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import shavkunov.skorogovorun.lite.Constants;
 import shavkunov.skorogovorun.lite.PatterTask;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
@@ -36,14 +39,20 @@ import shavkunov.skorogovorun.lite.model.Patter;
 
 public class TongueTwistersActivity extends AppCompatActivity {
 
-    private static final String KEY_LAST_PATTER = "lastPatter";
+    private static final String SAVED_LAST_PATTER = "lastPatter";
+    private static final String SAVED_LAST_CHOICE_ITEM = "lastChoiceItem";
     public static final String EXTRA_DATE_TONGUE = "extraDateTongue";
 
-    private SharedPreferences sharedPreferences;
+    private String[] arrayPatters = Constants.Url.ARRAY_PATTERS;
     private List<Patter> patters;
-    private boolean isInternet;
+
+    private SharedPreferences sharedPreferences;
     private PatterTask task;
     private TongueTwistersAdapter adapter;
+
+    private boolean isFirstVisit;
+    private boolean isInternet;
+    private int lastChoiceItem;
 
     @BindView(R.id.tongue_scroll_view)
     DiscreteScrollView tongueScrollView;
@@ -70,11 +79,23 @@ public class TongueTwistersActivity extends AppCompatActivity {
         patters = new ArrayList<>();
         ButterKnife.bind(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        task = (PatterTask) new PatterTask().execute();
+
+        lastChoiceItem = sharedPreferences.getInt(SAVED_LAST_CHOICE_ITEM, 0);
+        task = new PatterTask();
+        task.setUrl(arrayPatters[lastChoiceItem]);
+        task.execute();
         getPattersFromInternet();
     }
 
     public void getPattersFromInternet() {
+        if (patters.size() > 0) {
+            patters.clear();
+
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+
         final Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
@@ -132,11 +153,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
             noInternetButton.setVisibility(View.GONE);
         }
 
-        noInternetImage.setVisibility(View.INVISIBLE);
-        noInternetTitle.setVisibility(View.INVISIBLE);
-        noInternetSubtitle.setVisibility(View.INVISIBLE);
+        noInternetImage.setVisibility(View.GONE);
+        noInternetTitle.setVisibility(View.GONE);
+        noInternetSubtitle.setVisibility(View.GONE);
 
-        task = (PatterTask) new PatterTask().execute();
+        task = new PatterTask();
+        task.setUrl(arrayPatters[lastChoiceItem]);
+        task.execute();
         getPattersFromInternet();
     }
 
@@ -144,7 +167,12 @@ public class TongueTwistersActivity extends AppCompatActivity {
     private void setTongueRecyclerView() {
         adapter = new TongueTwistersAdapter(this, patters, true);
         tongueScrollView.setAdapter(adapter);
-        tongueScrollView.scrollToPosition(sharedPreferences.getInt(KEY_LAST_PATTER, 0));
+
+        if (!isFirstVisit) {
+            tongueScrollView.scrollToPosition(sharedPreferences.getInt(SAVED_LAST_PATTER, 0));
+            isFirstVisit = true;
+        }
+
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.8f)
@@ -152,18 +180,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
 
         if (isInternet) {
             int lastPosition = tongueScrollView.getCurrentItem();
-            sharedPreferences.edit().putInt(KEY_LAST_PATTER, lastPosition).apply();
+            sharedPreferences.edit().putInt(SAVED_LAST_PATTER, lastPosition).apply();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
         if (task != null) {
             task.cancel(true);
@@ -187,10 +210,39 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_sort:
+                String[] sortingName = getResources().getStringArray(R.array.sorting_name);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.sort))
+                        .setSingleChoiceItems(sortingName, lastChoiceItem,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        lastChoiceItem = i;
+                                        sharedPreferences.edit().putInt(SAVED_LAST_CHOICE_ITEM,
+                                                lastChoiceItem).apply();
+                                    }
+                                })
+                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (isConnectedToNetwork()) {
+                                    task = new PatterTask();
+                                    task.setUrl(arrayPatters[lastChoiceItem]);
+                                    task.execute();
+                                    getPattersFromInternet();
+                                    setInvisibleNoInternetViews();
+                                }
+                            }
+                        })
+                        .show();
+                return true;
             case R.id.action_add_all:
                 String result;
 
                 if (patters.size() > 0) {
+                    DatabaseLab.getInstance(this).deletePatters();
                     DatabaseLab.getInstance(this).addPatters(patters);
                     result = getString(R.string.everything_added);
                     adapter.notifyDataSetChanged();
@@ -208,5 +260,12 @@ public class TongueTwistersActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setInvisibleNoInternetViews() {
+        noInternetImage.setVisibility(View.GONE);
+        noInternetTitle.setVisibility(View.GONE);
+        noInternetSubtitle.setVisibility(View.GONE);
+        noInternetButton.setVisibility(View.GONE);
     }
 }

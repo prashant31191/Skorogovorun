@@ -27,4 +27,13 @@
     <string name="download_old_version">Скачать старую версию</string>
     <string name="select_app">Выберите приложение</string>
     <string name="asses">Оценить приложение</string>
+    <string name="sort">Сортировка скороговорок</string>
+    <string name="ok">ОК</string>
+
+    <string-array name="sorting_name">
+        <item>Все</item>
+        <item>Легкие</item>
+        <item>Средние</item>
+        <item>Сложные</item>
+    </string-array>
 </resources>

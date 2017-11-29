@@ -14,13 +14,14 @@ import shavkunov.skorogovorun.lite.model.Patter;
 public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
 
     private static final String REQUEST = "request";
+    private String url;
 
     private Patter[] patters;
 
     @Override
     protected Patter[] doInBackground(Void... params) {
         try {
-            final String url = "https://api.myjson.com/bins/15qa8b";
+            final String url = getUrl();
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Patter[]> responseEntity = restTemplate.getForEntity(url, Patter[].class);
@@ -37,6 +38,14 @@ public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
         if (p != null) {
             patters = Arrays.copyOf(p, p.length);
         }
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public Patter[] getPatters() {
