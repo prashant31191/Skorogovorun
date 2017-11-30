@@ -111,9 +111,11 @@ public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAd
                 } else {
                     DatabaseLab.getInstance(activity)
                             .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
-                    patters.remove(holder.getAdapterPosition());
 
-                    if (!isTongueTwistersActivity) {
+                    if (isTongueTwistersActivity) {
+                        patters.get(holder.getAdapterPosition()).setFavorite(false);
+                    } else {
+                        patters.remove(holder.getAdapterPosition());
                         notifyDataSetChanged();
                     }
                 }
