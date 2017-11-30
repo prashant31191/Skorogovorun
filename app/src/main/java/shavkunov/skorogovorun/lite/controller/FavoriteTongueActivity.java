@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,11 @@ import shavkunov.skorogovorun.lite.model.Patter;
 
 public class FavoriteTongueActivity extends AppCompatActivity {
 
-    private static final String KEY_LAST_PATTER_FAVORITE = "lastPatterFavorite";
+    private static final String SAVED_LAST_PATTER_FAVORITE = "lastPatterFavorite";
     public static final String EXTRA_DATE_FAVORITE = "extraDateFavorite";
 
     private List<Patter> patters;
+
     private SharedPreferences preferences;
     private TongueTwistersAdapter adapter;
 
@@ -63,13 +65,20 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     private void showHideEmptyViews() {
         emptyFavoriteImage.setImageResource(R.drawable.zoom);
         emptyFavoriteTitle.setText(R.string.favorite_title);
-        emptyFavoriteSubtitle.setText(R.string.favorite_tongue_subtitle);
+        emptyFavoriteSubtitle.setText(R.string.add_one_patter);
     }
 
     private void setScrollView() {
         adapter = new TongueTwistersAdapter(this, patters, false);
         favoriteTongueScrollView.setAdapter(adapter);
-        favoriteTongueScrollView.scrollToPosition(preferences.getInt(KEY_LAST_PATTER_FAVORITE, 0));
+
+        String lastPatterTitle = preferences.getString(SAVED_LAST_PATTER_FAVORITE, "");
+        for (int i = 0; i < patters.size(); i++) {
+            if (patters.get(i).getTitle().equals(lastPatterTitle)) {
+                favoriteTongueScrollView.scrollToPosition(i);
+            }
+        }
+
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.8f)
@@ -77,10 +86,14 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        int lastPosition = favoriteTongueScrollView.getCurrentItem();
-        preferences.edit().putInt(KEY_LAST_PATTER_FAVORITE, lastPosition).apply();
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (patters.size() > 0) {
+            int lastPosition = favoriteTongueScrollView.getCurrentItem();
+            String lastPatterTitle = patters.get(lastPosition).getTitle();
+            preferences.edit().putString(SAVED_LAST_PATTER_FAVORITE, lastPatterTitle).apply();
+        }
     }
 
     @Override
@@ -99,9 +112,18 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
+        switch (item.getItemId()) {
+            case R.id.action_shuffle:
+                if (patters.size() > 1) {
+                    Collections.shuffle(patters);
+                    DatabaseLab.getInstance(this).deletePatters();
+                    DatabaseLab.getInstance(this).addPatters(patters);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(this, getString(R.string.shuffle_is_impossible),
+                            Toast.LENGTH_SHORT).show();
+                }
+                return true;
             case R.id.action_clear:
                 String result;
 
@@ -118,9 +140,20 @@ public class FavoriteTongueActivity extends AppCompatActivity {
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_to_start:
-                if (patters.size() > 0) {
+                String toastText = null;
+
+                if (patters.size() == 0) {
+                    toastText = getString(R.string.no_patters);
+                } else if (patters.size() == 1){
+                    toastText = getString(R.string.little_patters);
+                } else {
                     favoriteTongueScrollView.smoothScrollToPosition(0);
                 }
+
+                if (toastText != null) {
+                    Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

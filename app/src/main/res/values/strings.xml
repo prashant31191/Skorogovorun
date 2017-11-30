@@ -9,7 +9,7 @@
     <string name="check_your_connection">Проверьте ваше интернет-соединение и попытайтесь снова</string>
     <string name="letters">Буквы:</string>
     <string name="favorite_title">Пока что ничего нет</string>
-    <string name="favorite_tongue_subtitle">Добавьте хотя бы одну скороговорку</string>
+    <string name="add_one_patter">Добавьте хотя бы одну скороговорку</string>
     <string name="last_visit">Последний визит:</string>
     <string name="minute">мин.</string>
     <string name="less_than_a_minute">Меньше минуты</string>
@@ -30,6 +30,9 @@
     <string name="sort">Сортировка скороговорок</string>
     <string name="ok">ОК</string>
     <string name="shuffle">Перетасовать</string>
+    <string name="shuffle_is_impossible">Перетасовка невозможна</string>
+    <string name="little_patters">Слишком мало скороговорок</string>
+    <string name="no_patters">Нет скороговорок</string>
 
     <string-array name="sorting_name">
         <item>Все</item>

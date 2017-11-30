@@ -195,9 +195,11 @@ public class TongueTwistersActivity extends AppCompatActivity {
         super.onDestroy();
 
         if (isInternet) {
-            int lastPosition = tongueScrollView.getCurrentItem();
-            String lastPatter = patters.get(lastPosition).getTitle();
-            sharedPreferences.edit().putString(SAVED_LAST_PATTER, lastPatter).apply();
+            if (patters.size() > 0) {
+                int lastPosition = tongueScrollView.getCurrentItem();
+                String lastPatter = patters.get(lastPosition).getTitle();
+                sharedPreferences.edit().putString(SAVED_LAST_PATTER, lastPatter).apply();
+            }
         }
 
         if (task != null) {
@@ -226,6 +228,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
                 if (patters.size() > 1) {
                     Collections.shuffle(patters);
                     adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(this, getString(R.string.shuffle_is_impossible),
+                            Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.action_sort:
@@ -271,7 +276,10 @@ public class TongueTwistersActivity extends AppCompatActivity {
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_to_start:
-                if (patters.size() > 0) {
+                if (patters.size() == 0) {
+                    Toast.makeText(this, getString(R.string.check_your_connection),
+                            Toast.LENGTH_SHORT).show();
+                } else {
                     tongueScrollView.smoothScrollToPosition(0);
                 }
                 return true;
