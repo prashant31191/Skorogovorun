@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,18 +78,25 @@ public class ExercisesFragment extends Fragment {
     public void onPause() {
         super.onPause();
         preferences.edit().putLong(SAVED_LAST_VISIT, lastDate).apply();
+
+        if (handler != null) {
+            handler.removeCallbacks(runnableCount);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (handler != null && runnableCount != null) {
+            handler.post(runnableCount);
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        handler.removeCallbacks(runnableCount);
     }
 
     public class ExercisesHolder extends RecyclerView.ViewHolder {
@@ -136,14 +142,7 @@ public class ExercisesFragment extends Fragment {
                     setImage(holder, R.drawable.forest);
 
                     handler = new Handler();
-                    runnableCount = new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.eCardDate.setText(lastVisit());
-
-                            handler.postDelayed(this, 1000);
-                        }
-                    };
+                    setRunnableCount(holder);
                     handler.post(runnableCount);
 
                     holder.eCardButton.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +152,7 @@ public class ExercisesFragment extends Fragment {
                                     REQUEST_TONGUE_ACTIVITY);
                         }
                     });
+                    holder.eCardFavoriteButton.setVisibility(View.VISIBLE);
                     holder.eCardFavoriteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -163,65 +163,6 @@ public class ExercisesFragment extends Fragment {
 
                     break;
             }
-        }
-
-        private String lastVisit() {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
-            long time = System.currentTimeMillis() - lastDate;
-
-            long seconds = time / 1000;
-            long minutes = time / (60 * 1000) % 60;
-            long hours = time / (60 * 60 * 1000) % 24;
-
-            String result;
-
-            if (seconds < 0) {
-                result = " ";
-            } else if (seconds < 60) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(getString(R.string.less_than_a_minute)).append(" ")
-                        .append(getString(R.string.ago)));
-            } else if (seconds < 3600) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(minutes).append(" ").append(getString(R.string.minute))
-                        .append(" ").append(getString(R.string.ago)));
-            } else if (seconds < 7200) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(hours).append(" ").append(getString(R.string.hour))
-                        .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
-                        .append(" ").append(getString(R.string.ago)));
-            } else if (seconds < 86400) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(hours).append(" ").append(getString(R.string.hour_two))
-                        .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
-                        .append(" ").append(getString(R.string.ago)));
-            } else if (seconds < 172800) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(getString(R.string.yesterday)));
-            } else if (seconds < 259200) {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(getString(R.string.the_day_before_yesterday)));
-            } else {
-                result = String.valueOf(new StringBuilder()
-                        .append(getString(R.string.last_visit)).append(" ")
-                        .append(dateFormat.format(new Date(lastDate))));
-            }
-
-            String mistake = String.valueOf(new StringBuilder()
-            .append(getString(R.string.last_visit)).append(" ")
-            .append("1 янв. 1970"));
-
-            if (result.equals(mistake)) {
-                result = " ";
-            }
-
-            return result;
         }
 
         private void setIntent(Class<?> cls, int requestCode) {
@@ -241,6 +182,87 @@ public class ExercisesFragment extends Fragment {
         public int getItemCount() {
             return 1;
         }
+    }
+
+    /**
+     * Высчитывает, когда был последний визит в одну из вьюшек
+     *
+     * @return строку с результатом
+     */
+    private String lastVisit() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
+        long time = System.currentTimeMillis() - lastDate;
+
+        long seconds = time / 1000;
+        long minutes = time / (60 * 1000) % 60;
+        long hours = time / (60 * 60 * 1000) % 24;
+
+        String result;
+
+        if (seconds < 0) {
+            result = " ";
+        } else if (seconds < 60) {
+            result = String.valueOf(seconds);
+
+                /*result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(getString(R.string.less_than_a_minute)).append(" ")
+                        .append(getString(R.string.ago)));*/
+        } else if (seconds < 3600) {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(minutes).append(" ").append(getString(R.string.minute))
+                    .append(" ").append(getString(R.string.ago)));
+        } else if (seconds < 7200) {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(hours).append(" ").append(getString(R.string.hour))
+                    .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
+                    .append(" ").append(getString(R.string.ago)));
+        } else if (seconds < 86400) {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(hours).append(" ").append(getString(R.string.hour_two))
+                    .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
+                    .append(" ").append(getString(R.string.ago)));
+        } else if (seconds < 172800) {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(getString(R.string.yesterday)));
+        } else if (seconds < 259200) {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(getString(R.string.the_day_before_yesterday)));
+        } else {
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(dateFormat.format(new Date(lastDate))));
+        }
+
+        String mistake = String.valueOf(new StringBuilder()
+                .append(getString(R.string.last_visit)).append(" ")
+                .append("1 янв. 1970"));
+
+        if (result.equals(mistake)) {
+            result = " ";
+        }
+
+        return result;
+    }
+
+    private void setRunnableCount(final ExercisesHolder holder) {
+        runnableCount = new Runnable() {
+            @Override
+            public void run() {
+                Activity activity = getActivity();
+
+                if (activity != null) {
+                    holder.eCardDate.setText(lastVisit());
+                }
+
+                handler.postDelayed(this, 1000);
+            }
+        };
     }
 
     @Override
