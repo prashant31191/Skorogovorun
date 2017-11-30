@@ -109,6 +109,12 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         Collections.addAll(patters, task.getPatters());
                         setTongueRecyclerView();
                         isInternet = true;
+
+                        // lastChoiceItem == 4 (Случайная сортировка)
+                        if (lastChoiceItem == 4) {
+                            Collections.shuffle(patters);
+                            adapter.notifyDataSetChanged();
+                        }
                     } else {
                         noInternetImage.setVisibility(View.VISIBLE);
                         noInternetTitle.setVisibility(View.VISIBLE);

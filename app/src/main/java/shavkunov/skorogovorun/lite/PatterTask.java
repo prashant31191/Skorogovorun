@@ -13,7 +13,7 @@ import shavkunov.skorogovorun.lite.model.Patter;
 
 public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
 
-    private static final String REQUEST = "request";
+    private static final String HTTP_REQUEST = "httpRequest";
     private String url;
 
     private Patter[] patters;
@@ -27,7 +27,7 @@ public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
             ResponseEntity<Patter[]> responseEntity = restTemplate.getForEntity(url, Patter[].class);
             return responseEntity.getBody();
         } catch (Exception e) {
-            Log.e(REQUEST, "The exception was caught in PatterTask");
+            Log.e(HTTP_REQUEST, "The exception was caught in PatterTask");
         }
 
         return null;

@@ -12,6 +12,6 @@ public class Constants {
         private static final String HARD_PATTERS = "https://api.myjson.com/bins/1h6asj";
 
         public static final String[] ARRAY_PATTERS = {ALL_PATTERS, LIGHT_PATTERS, MEDIUM_PATTERS,
-                HARD_PATTERS};
+                HARD_PATTERS, ALL_PATTERS};
     }
 }

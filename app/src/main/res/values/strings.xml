@@ -35,5 +35,6 @@
         <item>Легкие</item>
         <item>Средние</item>
         <item>Сложные</item>
+        <item>Случайные</item>
     </string-array>
 </resources>
