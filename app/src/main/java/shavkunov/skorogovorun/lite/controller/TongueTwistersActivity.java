@@ -50,7 +50,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
     private PatterTask task;
     private TongueTwistersAdapter adapter;
 
-    private boolean isFirstVisit;
+    private boolean isNotFirstVisit;
     private boolean isInternet;
     private int lastChoiceItem;
 
@@ -109,12 +109,6 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         Collections.addAll(patters, task.getPatters());
                         setTongueRecyclerView();
                         isInternet = true;
-
-                        // lastChoiceItem == 4 (Случайная сортировка)
-                        if (lastChoiceItem == 4) {
-                            Collections.shuffle(patters);
-                            adapter.notifyDataSetChanged();
-                        }
                     } else {
                         noInternetImage.setVisibility(View.VISIBLE);
                         noInternetTitle.setVisibility(View.VISIBLE);
@@ -173,9 +167,21 @@ public class TongueTwistersActivity extends AppCompatActivity {
         adapter = new TongueTwistersAdapter(this, patters, true);
         tongueScrollView.setAdapter(adapter);
 
-        if (!isFirstVisit) {
-            tongueScrollView.scrollToPosition(sharedPreferences.getInt(SAVED_LAST_PATTER, 0));
-            isFirstVisit = true;
+        /*
+        Если используем метод не впервые, то нет необходимости восстанавливать последнюю
+        скороговорку, а это значит что isNotFirstVisit == true
+         */
+        if (!isNotFirstVisit) {
+            String lastPatterTitle = sharedPreferences.getString(SAVED_LAST_PATTER, "");
+            int lastPosition = 0;
+            for (int i = 0; i < patters.size(); i++) {
+                if (patters.get(i).getTitle().equals(lastPatterTitle)) {
+                    lastPosition = i;
+                }
+            }
+
+            tongueScrollView.scrollToPosition(lastPosition);
+            isNotFirstVisit = true;
         }
 
         tongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
@@ -190,7 +196,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
         if (isInternet) {
             int lastPosition = tongueScrollView.getCurrentItem();
-            sharedPreferences.edit().putInt(SAVED_LAST_PATTER, lastPosition).apply();
+            String lastPatter = patters.get(lastPosition).getTitle();
+            sharedPreferences.edit().putString(SAVED_LAST_PATTER, lastPatter).apply();
         }
 
         if (task != null) {
@@ -215,6 +222,12 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_shuffle:
+                if (patters.size() > 1) {
+                    Collections.shuffle(patters);
+                    adapter.notifyDataSetChanged();
+                }
+                return true;
             case R.id.action_sort:
                 String[] sortingName = getResources().getStringArray(R.array.sorting_name);
 
