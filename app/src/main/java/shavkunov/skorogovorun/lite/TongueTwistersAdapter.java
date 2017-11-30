@@ -125,6 +125,7 @@ public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAd
 
     private void setSounds(TongueHolder holder) {
         if (patters.get(holder.getAdapterPosition()).getSounds() != null) {
+            holder.tCardSounds.setVisibility(View.VISIBLE);
             String sounds = activity.getString(R.string.letters) + " " +
                     patters.get(holder.getAdapterPosition()).getSounds();
             holder.tCardSounds.setText(sounds);
