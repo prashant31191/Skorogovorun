@@ -16,6 +16,9 @@ public class CardLab {
 
     private static CardLab cardLab;
 
+    private CardLab() {
+    }
+
     public static CardLab newInstance() {
         if (cardLab == null) {
             cardLab = new CardLab();
