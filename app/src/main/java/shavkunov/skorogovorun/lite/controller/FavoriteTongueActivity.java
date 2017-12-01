@@ -2,6 +2,7 @@ package shavkunov.skorogovorun.lite.controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,11 +74,22 @@ public class FavoriteTongueActivity extends AppCompatActivity {
         favoriteTongueScrollView.setAdapter(adapter);
 
         String lastPatterTitle = preferences.getString(SAVED_LAST_PATTER_FAVORITE, "");
+        int lastPosition = 0;
         for (int i = 0; i < patters.size(); i++) {
             if (patters.get(i).getTitle().equals(lastPatterTitle)) {
-                favoriteTongueScrollView.scrollToPosition(i);
+                lastPosition = i;
+                break;
             }
         }
+
+        // Без ожидания не скролится к определенной позиции после смены ориентации
+        final int finalLastPosition = lastPosition;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                favoriteTongueScrollView.scrollToPosition(finalLastPosition);
+            }
+        }, 1);
 
         favoriteTongueScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
@@ -88,7 +100,6 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (patters.size() > 0) {
             int lastPosition = favoriteTongueScrollView.getCurrentItem();
             String lastPatterTitle = patters.get(lastPosition).getTitle();
@@ -116,8 +127,6 @@ public class FavoriteTongueActivity extends AppCompatActivity {
             case R.id.action_shuffle:
                 if (patters.size() > 1) {
                     Collections.shuffle(patters);
-                    DatabaseLab.getInstance(this).deletePatters();
-                    DatabaseLab.getInstance(this).addPatters(patters);
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(this, getString(R.string.shuffle_is_impossible),
@@ -144,7 +153,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
 
                 if (patters.size() == 0) {
                     toastText = getString(R.string.no_patters);
-                } else if (patters.size() == 1){
+                } else if (patters.size() == 1) {
                     toastText = getString(R.string.little_patters);
                 } else {
                     favoriteTongueScrollView.smoothScrollToPosition(0);

@@ -177,6 +177,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
             for (int i = 0; i < patters.size(); i++) {
                 if (patters.get(i).getTitle().equals(lastPatterTitle)) {
                     lastPosition = i;
+                    break;
                 }
             }
 
