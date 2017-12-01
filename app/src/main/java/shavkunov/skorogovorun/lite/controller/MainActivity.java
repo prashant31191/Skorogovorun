@@ -1,10 +1,11 @@
 package shavkunov.skorogovorun.lite.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,10 @@ import shavkunov.skorogovorun.lite.controller.tabs.ExercisesFragment;
 import shavkunov.skorogovorun.lite.controller.tabs.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String LAST_DATE = "lastDate";
+
+    private long lastDate;
 
     private Fragment fragment;
 
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (tabId) {
                     case R.id.tab_home:
-                        fragment = ExercisesFragment.newInstance();
+                        setExercisesFragment();
                         toolbarTitle = getString(R.string.exercises);
                         break;
                     case R.id.tab_course:
@@ -57,19 +62,27 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 setFragments();
-                getSupportActionBar().setTitle(toolbarTitle);
+
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle(toolbarTitle);
+                }
             }
         });
     }
 
-    private Fragment createFragment() {
-        return fragment;
+    private void setExercisesFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putLong(LAST_DATE, lastDate);
+        fragment = ExercisesFragment.newInstance();
+        fragment.setArguments(bundle);
     }
 
     private void setFragments() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, createFragment());
-        ft.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -97,5 +110,23 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(Uri.parse(uriString));
         Intent selectedApp = Intent.createChooser(intent, getString(R.string.select_app));
         startActivity(selectedApp);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case ExercisesFragment.REQUEST_TONGUE_ACTIVITY:
+                    lastDate = data.getLongExtra(TongueTwistersActivity.EXTRA_DATE_TONGUE, 0);
+                    setExercisesFragment();
+                    setFragments();
+                    break;
+                case ExercisesFragment.REQUEST_FAVORITE_TONGUE_ACTIVITY:
+                    lastDate = data.getLongExtra(FavoriteTongueActivity.EXTRA_DATE_FAVORITE, 0);
+                    setExercisesFragment();
+                    setFragments();
+                    break;
+            }
+        }
     }
 }

@@ -31,18 +31,18 @@ import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.controller.FavoriteTongueActivity;
+import shavkunov.skorogovorun.lite.controller.MainActivity;
 import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
 
 public class ExercisesFragment extends Fragment {
 
     private static final String SAVED_LAST_VISIT = "savedLastVisit";
 
-    private static final int REQUEST_FAVORITE_TONGUE_ACTIVITY = 0;
-    private static final int REQUEST_TONGUE_ACTIVITY = 1;
+    public static final int REQUEST_FAVORITE_TONGUE_ACTIVITY = 0;
+    public static final int REQUEST_TONGUE_ACTIVITY = 1;
 
     private Unbinder unbinder;
     private long lastDate;
-    private ExercisesAdapter adapter;
     private Runnable runnableCount;
     private Handler handler;
     private SharedPreferences preferences;
@@ -59,19 +59,24 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         lastDate = preferences.getLong(SAVED_LAST_VISIT, 0);
+        Bundle argumentsBundle = getArguments();
+        if (argumentsBundle != null) {
+            if (argumentsBundle.getLong(MainActivity.LAST_DATE) > 0) {
+                lastDate = argumentsBundle.getLong(MainActivity.LAST_DATE);
+            }
+        }
 
         setExercisesRecyclerView();
         return view;
     }
 
     private void setExercisesRecyclerView() {
-        adapter = new ExercisesAdapter();
         exercisesRecyclerView.setNestedScrollingEnabled(false);
         exercisesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        exercisesRecyclerView.setAdapter(adapter);
+        exercisesRecyclerView.setAdapter(new ExercisesAdapter());
     }
 
     @Override
@@ -167,7 +172,13 @@ public class ExercisesFragment extends Fragment {
 
         private void setIntent(Class<?> cls, int requestCode) {
             Intent intent = new Intent(getContext(), cls);
-            startActivityForResult(intent, requestCode);
+            Activity activity = getActivity();
+
+            if (activity != null) {
+                getActivity().startActivityForResult(intent, requestCode);
+            } else {
+                startActivityForResult(intent, requestCode);
+            }
         }
 
         private void setImage(ExercisesHolder holder, @DrawableRes int imageRes) {
@@ -261,21 +272,5 @@ public class ExercisesFragment extends Fragment {
                 handler.postDelayed(this, 1000);
             }
         };
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_TONGUE_ACTIVITY:
-                    lastDate = data.getLongExtra(TongueTwistersActivity.EXTRA_DATE_TONGUE, 0);
-                    break;
-                case REQUEST_FAVORITE_TONGUE_ACTIVITY:
-                    lastDate = data.getLongExtra(FavoriteTongueActivity.EXTRA_DATE_FAVORITE, 0);
-                    break;
-            }
-
-            adapter.notifyDataSetChanged();
-        }
     }
 }
