@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_default"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/card_margin"
+    card_view:cardCornerRadius="@dimen/cardCornerRadius">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/card_image_default"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_row="0"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/forest" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/card_title_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/standard_dimen"
+                android:layout_marginStart="@dimen/standard_dimen"
+                android:layout_marginTop="@dimen/standard_dimen"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                tools:text="Item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_row="0"
+            android:orientation="horizontal">
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/card_favorite_default"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@android:color/white"
+                android:visibility="gone"
+                app:allow_random_color="false"
+                app:btn_color="@android:color/white"
+                app:btn_fill_color="@android:color/white"
+                app:click_animation_duration="0"
+                app:shine_animation_duration="0"
+                app:shine_count="0"
+                app:shine_turn_angle="40"
+                app:siShape="@drawable/favorite" />
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/card_button_default"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/standard_dimen"
+                android:layout_marginEnd="@dimen/standard_dimen"
+                android:layout_marginRight="@dimen/standard_dimen"
+                android:layout_marginTop="@dimen/standard_dimen"
+                android:src="@android:color/white"
+                app:allow_random_color="false"
+                app:btn_color="@android:color/white"
+                app:btn_fill_color="@android:color/white"
+                app:click_animation_duration="0"
+                app:shine_animation_duration="0"
+                app:shine_count="0"
+                app:shine_turn_angle="40"
+                app:siShape="@drawable/play" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_row="0"
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:orientation="vertical">
+
+            <com.daimajia.numberprogressbar.NumberProgressBar
+                android:id="@+id/card_progress_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_dimen"
+                android:visibility="gone"
+                custom:progress_reached_color="@android:color/white"
+                custom:progress_text_color="@android:color/white"
+                custom:progress_unreached_color="@android:color/white" />
+
+            <TextView
+                android:id="@+id/card_subtitle_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/standard_dimen"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/subtitle_size"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="Заходили 17 минут назад" />
+        </LinearLayout>
+    </GridLayout>
+</android.support.v7.widget.CardView>
