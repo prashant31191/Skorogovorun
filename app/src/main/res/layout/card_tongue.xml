@@ -69,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_margin="@dimen/card_dimen"
-                        tools:src="@drawable/forest" />
+                        tools:src="@drawable/preview_patters" />
 
                     <TextView
                         android:id="@+id/tCard_title"

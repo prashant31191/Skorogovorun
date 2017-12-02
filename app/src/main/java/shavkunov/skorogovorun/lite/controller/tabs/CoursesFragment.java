@@ -68,6 +68,7 @@ public class CoursesFragment extends Fragment {
         public CoursesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            cCardButton.init(getActivity());
             cCardProgress.setVisibility(View.VISIBLE);
         }
     }
@@ -82,29 +83,35 @@ public class CoursesFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(CoursesHolder holder, int position) {
+        public void onBindViewHolder(final CoursesHolder holder, int position) {
             switch (position) {
                 case 0:
                     holder.cCard_title.setText(getString(R.string.posture));
-                    CardLab.newInstance().setImage(holder.itemView, R.drawable.forest,
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.man_posture,
                             holder.cCard_image);
-                    holder.cCardProgress.setProgress(0);
+
+                    holder.cCardButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            holder.cCardButton.showAnim();
+                        }
+                    });
                     break;
                 case 1:
-                    holder.cCard_title.setText(getString(R.string.breathe));
-                    CardLab.newInstance().setImage(holder.itemView, R.drawable.forest,
+                    holder.cCard_title.setText(getString(R.string.breath));
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.breath,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(35);
                     break;
                 case 2:
                     holder.cCard_title.setText(getString(R.string.voice));
-                    CardLab.newInstance().setImage(holder.itemView, R.drawable.forest,
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.voice,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(70);
                     break;
                 case 3:
                     holder.cCard_title.setText(getString(R.string.diction));
-                    CardLab.newInstance().setImage(holder.itemView, R.drawable.forest,
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.diction,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(100);
                     break;

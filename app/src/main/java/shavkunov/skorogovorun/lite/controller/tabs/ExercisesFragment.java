@@ -119,6 +119,8 @@ public class ExercisesFragment extends Fragment {
         public ExercisesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            eCardButton.init(getActivity());
+            eCardFavoriteButton.init(getActivity());
             eCardDate.setVisibility(View.VISIBLE);
         }
     }
@@ -137,7 +139,7 @@ public class ExercisesFragment extends Fragment {
             switch (position) {
                 case 0:
                     holder.eCardTitle.setText(R.string.tongue_twisters);
-                    CardLab.newInstance().setImage(holder.itemView, R.drawable.forest,
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.preview_patters,
                             holder.eCardImage);
 
                     handler = new Handler();
@@ -147,6 +149,7 @@ public class ExercisesFragment extends Fragment {
                     holder.eCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            holder.eCardButton.showAnim();
                             CardLab.newInstance().setIntent(getActivity(),
                                     TongueTwistersActivity.class, REQUEST_TONGUE_ACTIVITY);
                         }
@@ -155,6 +158,7 @@ public class ExercisesFragment extends Fragment {
                     holder.eCardFavoriteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            holder.eCardFavoriteButton.showAnim();
                             CardLab.newInstance().setIntent(getActivity(),
                                     FavoriteTongueActivity.class, REQUEST_FAVORITE_TONGUE_ACTIVITY);
                         }
