@@ -6,10 +6,10 @@
     android:layout_height="match_parent" >
 
     <com.yarolegovich.discretescrollview.DiscreteScrollView
-        android:id="@+id/tongue_scroll_view"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:dsv_orientation="horizontal" />
+        app:dsv_orientation="horizontal"/>
 
     <include
         layout="@layout/empty"/>

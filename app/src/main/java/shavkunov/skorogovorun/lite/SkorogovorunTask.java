@@ -9,34 +9,34 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
-import shavkunov.skorogovorun.lite.model.Patter;
+import shavkunov.skorogovorun.lite.model.Card;
 
-public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
+public class SkorogovorunTask extends AsyncTask<Void, Void, Card[]> {
 
     private static final String HTTP_REQUEST = "httpRequest";
     private String url;
 
-    private Patter[] patters;
+    private Card[] cards;
 
     @Override
-    protected Patter[] doInBackground(Void... params) {
+    protected Card[] doInBackground(Void... params) {
         try {
             final String url = getUrl();
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<Patter[]> responseEntity = restTemplate.getForEntity(url, Patter[].class);
+            ResponseEntity<Card[]> responseEntity = restTemplate.getForEntity(url, Card[].class);
             return responseEntity.getBody();
         } catch (Exception e) {
-            Log.e(HTTP_REQUEST, "The exception was caught in PatterTask");
+            Log.e(HTTP_REQUEST, "The exception was caught in SkorogovorunTask");
         }
 
         return null;
     }
 
     @Override
-    protected void onPostExecute(Patter[] p) {
-        if (p != null) {
-            patters = Arrays.copyOf(p, p.length);
+    protected void onPostExecute(Card[] c) {
+        if (c != null) {
+            cards = Arrays.copyOf(c, c.length);
         }
     }
 
@@ -48,7 +48,7 @@ public class PatterTask extends AsyncTask<Void, Void, Patter[]> {
         return url;
     }
 
-    public Patter[] getPatters() {
-        return patters;
+    public Card[] getCards() {
+        return cards;
     }
 }

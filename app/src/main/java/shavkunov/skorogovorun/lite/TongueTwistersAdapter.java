@@ -19,15 +19,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
-import shavkunov.skorogovorun.lite.model.Patter;
+import shavkunov.skorogovorun.lite.model.Card;
 
 public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAdapter.TongueHolder> {
 
-    private List<Patter> patters;
+    private List<Card> patters;
     private Activity activity;
     private boolean isTongueTwistersActivity;
 
-    public TongueTwistersAdapter(Activity activity, List<Patter> patters,
+    public TongueTwistersAdapter(Activity activity, List<Card> patters,
                                  boolean isTongueTwistersActivity) {
         this.activity = activity;
         this.patters = patters;
@@ -90,7 +90,7 @@ public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAd
 
         if (isTongueTwistersActivity) {
             // Существует ли в БД скороговорка с таким же текстом
-            Patter patter = DatabaseLab.getInstance(activity)
+            Card patter = DatabaseLab.getInstance(activity)
                     .getPatter(patters.get(holder.getAdapterPosition()).getTitle());
 
             if (patter != null) {
@@ -103,14 +103,14 @@ public class TongueTwistersAdapter extends RecyclerView.Adapter<TongueTwistersAd
             @Override
             public void onClick(View view) {
                 if (holder.tCardFavoriteButton.isChecked()) {
-                    DatabaseLab.getInstance(activity).addPatter(new Patter(
+                    DatabaseLab.getInstance(activity).addCard(new Card(
                             patters.get(holder.getAdapterPosition()).getImage(),
                             patters.get(holder.getAdapterPosition()).getTitle(),
                             patters.get(holder.getAdapterPosition()).getSounds(),
                             true));
                 } else {
                     DatabaseLab.getInstance(activity)
-                            .deletePatter(patters.get(holder.getAdapterPosition()).getTitle());
+                            .deleteCard(patters.get(holder.getAdapterPosition()).getTitle());
 
                     if (isTongueTwistersActivity) {
                         patters.get(holder.getAdapterPosition()).setFavorite(false);

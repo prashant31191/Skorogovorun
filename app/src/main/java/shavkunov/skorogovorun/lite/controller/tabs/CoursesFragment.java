@@ -18,8 +18,15 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.controller.CardLab;
+import shavkunov.skorogovorun.lite.controller.CourseActivity;
 
 public class CoursesFragment extends Fragment {
+
+    public static final int REQUEST_POSTURE = 0;
+    public static final int REQUEST_BREATH = 1;
+    public static final int REQUEST_VOICE = 2;
+    public static final int REQUEST_DICTION = 3;
+    public static final String EXTRA_COURSE = "extraCourse";
 
     private Unbinder unbinder;
 
@@ -94,6 +101,8 @@ public class CoursesFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             holder.cCardButton.showAnim();
+                            CardLab.newInstance().setIntent(getActivity(), CourseActivity.class,
+                                    EXTRA_COURSE, getString(R.string.posture), REQUEST_POSTURE);
                         }
                     });
                     break;
@@ -102,18 +111,42 @@ public class CoursesFragment extends Fragment {
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.breath,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(35);
+                    holder.cCardButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            holder.cCardButton.showAnim();
+                            CardLab.newInstance().setIntent(getActivity(), CourseActivity.class,
+                                    EXTRA_COURSE, getString(R.string.breath), REQUEST_BREATH);
+                        }
+                    });
                     break;
                 case 2:
                     holder.cCard_title.setText(getString(R.string.voice));
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.voice,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(70);
+                    holder.cCardButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            holder.cCardButton.showAnim();
+                            CardLab.newInstance().setIntent(getActivity(), CourseActivity.class,
+                                    EXTRA_COURSE, getString(R.string.voice), REQUEST_VOICE);
+                        }
+                    });
                     break;
                 case 3:
                     holder.cCard_title.setText(getString(R.string.diction));
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.diction,
                             holder.cCard_image);
                     holder.cCardProgress.setProgress(100);
+                    holder.cCardButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            holder.cCardButton.showAnim();
+                            CardLab.newInstance().setIntent(getActivity(), CourseActivity.class,
+                                    EXTRA_COURSE, getString(R.string.diction), REQUEST_DICTION);
+                        }
+                    });
                     break;
             }
         }

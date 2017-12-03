@@ -24,6 +24,7 @@
         <activity
             android:name=".controller.FavoriteTongueActivity"
             android:label="@string/favorites" />
+        <activity android:name=".controller.CourseActivity"></activity>
     </application>
 
 </manifest>

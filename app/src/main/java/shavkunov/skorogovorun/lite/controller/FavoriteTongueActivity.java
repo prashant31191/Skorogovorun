@@ -24,19 +24,19 @@ import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
-import shavkunov.skorogovorun.lite.model.Patter;
+import shavkunov.skorogovorun.lite.model.Card;
 
 public class FavoriteTongueActivity extends AppCompatActivity {
 
     private static final String SAVED_LAST_PATTER_FAVORITE = "lastPatterFavorite";
     public static final String EXTRA_DATE_FAVORITE = "extraDateFavorite";
 
-    private List<Patter> patters;
+    private List<Card> patters;
 
     private SharedPreferences preferences;
     private TongueTwistersAdapter adapter;
 
-    @BindView(R.id.tongue_scroll_view)
+    @BindView(R.id.scroll_view)
     DiscreteScrollView favoriteTongueScrollView;
 
     @BindView(R.id.image_empty)
@@ -51,9 +51,9 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tongue_twisters);
+        setContentView(R.layout.activity_scroll_view);
         ButterKnife.bind(this);
-        patters = DatabaseLab.getInstance(this).getPatters();
+        patters = DatabaseLab.getInstance(this).getCards();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (patters.size() > 0) {
@@ -137,7 +137,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
                 String result;
 
                 if (patters.size() > 0) {
-                    DatabaseLab.getInstance(this).deletePatters();
+                    DatabaseLab.getInstance(this).deleteCards();
                     patters.clear();
                     adapter.notifyDataSetChanged();
                     showHideEmptyViews();

@@ -3,8 +3,6 @@ package shavkunov.skorogovorun.lite.controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -31,11 +29,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import shavkunov.skorogovorun.lite.Constants;
-import shavkunov.skorogovorun.lite.PatterTask;
 import shavkunov.skorogovorun.lite.R;
+import shavkunov.skorogovorun.lite.SkorogovorunTask;
 import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
-import shavkunov.skorogovorun.lite.model.Patter;
+import shavkunov.skorogovorun.lite.model.Card;
 
 public class TongueTwistersActivity extends AppCompatActivity {
 
@@ -44,17 +42,17 @@ public class TongueTwistersActivity extends AppCompatActivity {
     public static final String EXTRA_DATE_TONGUE = "extraDateTongue";
 
     private String[] arrayPatters = Constants.Url.ARRAY_PATTERS;
-    private List<Patter> patters;
+    private List<Card> patters;
 
     private SharedPreferences sharedPreferences;
-    private PatterTask task;
+    private SkorogovorunTask task;
     private TongueTwistersAdapter adapter;
 
     private boolean isNotFirstVisit;
     private boolean isInternet;
     private int lastChoiceItem;
 
-    @BindView(R.id.tongue_scroll_view)
+    @BindView(R.id.scroll_view)
     DiscreteScrollView tongueScrollView;
 
     @BindView(R.id.image_empty)
@@ -75,13 +73,13 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tongue_twisters);
+        setContentView(R.layout.activity_scroll_view);
         patters = new ArrayList<>();
         ButterKnife.bind(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         lastChoiceItem = sharedPreferences.getInt(SAVED_LAST_CHOICE_ITEM, 0);
-        task = new PatterTask();
+        task = new SkorogovorunTask();
         task.setUrl(arrayPatters[lastChoiceItem]);
         task.execute();
         getPattersFromInternet();
@@ -105,8 +103,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
                 if (task.getStatus().toString().equals("FINISHED")) {
                     progressBar.hideNow();
 
-                    if (task.getPatters() != null) {
-                        Collections.addAll(patters, task.getPatters());
+                    if (task.getCards() != null) {
+                        Collections.addAll(patters, task.getCards());
                         setTongueRecyclerView();
                         isInternet = true;
                     } else {
@@ -127,29 +125,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Проверяет, подключено ли устройство к интернету
-     *
-     * @return true, если устройство имеет доступ к сети
-     */
-    public boolean isConnectedToNetwork() {
-        boolean connected = false;
-        ConnectivityManager cm = (ConnectivityManager) this
-                .getSystemService(CONNECTIVITY_SERVICE);
-
-        if (cm != null) {
-            NetworkInfo ni = cm.getActiveNetworkInfo();
-            if (ni != null) {
-                connected = ni.isConnected();
-            }
-        }
-
-        return connected;
-    }
-
     @OnClick(R.id.button_empty)
     public void onNoInternetButton() {
-        if (isConnectedToNetwork()) {
+        if (CardLab.newInstance().isConnectedToNetwork(this)) {
             noInternetButton.setVisibility(View.GONE);
         }
 
@@ -157,7 +135,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
         noInternetTitle.setVisibility(View.GONE);
         noInternetSubtitle.setVisibility(View.GONE);
 
-        task = new PatterTask();
+        task = new SkorogovorunTask();
         task.setUrl(arrayPatters[lastChoiceItem]);
         task.execute();
         getPattersFromInternet();
@@ -251,8 +229,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                if (isConnectedToNetwork()) {
-                                    task = new PatterTask();
+                                if (CardLab.newInstance()
+                                        .isConnectedToNetwork(TongueTwistersActivity.this)) {
+                                    task = new SkorogovorunTask();
                                     task.setUrl(arrayPatters[lastChoiceItem]);
                                     task.execute();
                                     getPattersFromInternet();
@@ -266,8 +245,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
                 String result;
 
                 if (patters.size() > 0) {
-                    DatabaseLab.getInstance(this).deletePatters();
-                    DatabaseLab.getInstance(this).addPatters(patters);
+                    DatabaseLab.getInstance(this).deleteCards();
+                    DatabaseLab.getInstance(this).addCards(patters);
                     result = getString(R.string.everything_added);
                     adapter.notifyDataSetChanged();
                 } else {

@@ -1,15 +1,15 @@
 package shavkunov.skorogovorun.lite.model;
 
-public class Patter {
+public class Card {
 
     private String image;
     private String title;
     private String sounds;
     private boolean isFavorite;
 
-    public Patter() {}
+    public Card() {}
 
-    public Patter(String image, String title, String sounds, boolean isFavorite) {
+    public Card(String image, String title, String sounds, boolean isFavorite) {
         this.image = image;
         this.title = title;
         this.sounds = sounds;

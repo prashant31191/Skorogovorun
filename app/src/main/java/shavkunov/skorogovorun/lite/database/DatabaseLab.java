@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shavkunov.skorogovorun.lite.database.SkorDBSchema.SkorTable.Cols;
-import shavkunov.skorogovorun.lite.model.Patter;
+import shavkunov.skorogovorun.lite.model.Card;
 
 public class DatabaseLab {
 
-    private static final String GET_PATTERS_EXCEPTION = "getPattersException";
-    private static final String GET_PATTER_EXCEPTION = "getPatterException";
+    private static final String GET_CARDS_EXCEPTION = "getCardsException";
+    private static final String GET_CARD_EXCEPTION = "getCardException";
 
     private static DatabaseLab databaseLab;
     private SQLiteDatabase database;
@@ -33,38 +33,38 @@ public class DatabaseLab {
                 .getWritableDatabase();
     }
 
-    private static ContentValues getContentValues(Patter patter) {
+    private static ContentValues getContentValues(Card card) {
         ContentValues values = new ContentValues();
-        values.put(Cols.IMAGE, patter.getImage());
-        values.put(Cols.TITLE, patter.getTitle());
-        values.put(Cols.SOUNDS, patter.getSounds());
-        values.put(Cols.FAVORITE, patter.isFavorite() ? 1 : 0);
+        values.put(Cols.IMAGE, card.getImage());
+        values.put(Cols.TITLE, card.getTitle());
+        values.put(Cols.SOUNDS, card.getSounds());
+        values.put(Cols.FAVORITE, card.isFavorite() ? 1 : 0);
 
         return values;
     }
 
-    public void addPatter(Patter patter) {
-        ContentValues values = getContentValues(patter);
+    public void addCard(Card card) {
+        ContentValues values = getContentValues(card);
         database.insert(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, values);
     }
 
-    public void addPatters(List<Patter> patters) {
-        for (Patter p : patters) {
-            p.setFavorite(true);
-            addPatter(p);
+    public void addCards(List<Card> cards) {
+        for (Card c : cards) {
+            c.setFavorite(true);
+            addCard(c);
         }
     }
 
-    public void deletePatter(String patterTitle) {
+    public void deleteCard(String cardTitle) {
         database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE,
-                Cols.TITLE + " = ?", new String[]{patterTitle});
+                Cols.TITLE + " = ?", new String[]{cardTitle});
     }
 
-    public void deletePatters() {
+    public void deleteCards() {
         database.delete(SkorDBSchema.SkorTable.FAVORITE_TONGUE, null, null);
     }
 
-    private SkorCursorWrapper queryPatters(String whereClause, String[] whereArgs) {
+    private SkorCursorWrapper queryCards(String whereClause, String[] whereArgs) {
         Cursor cursor = database.query(
                 SkorDBSchema.SkorTable.FAVORITE_TONGUE,
                 null,
@@ -77,28 +77,28 @@ public class DatabaseLab {
         return new SkorCursorWrapper(cursor);
     }
 
-    public List<Patter> getPatters() {
-        List<Patter> patters = new ArrayList<>();
-        SkorCursorWrapper cursor = queryPatters(null, null);
+    public List<Card> getCards() {
+        List<Card> cards = new ArrayList<>();
+        SkorCursorWrapper cursor = queryCards(null, null);
 
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                patters.add(cursor.getPatter());
+                cards.add(cursor.getCard());
                 cursor.moveToNext();
             }
         } catch (SQLiteException e) {
-            Log.e(GET_PATTERS_EXCEPTION,
-                    "The exception was caught in getPatters() method in DatabaseLab.java");
+            Log.e(GET_CARDS_EXCEPTION,
+                    "The exception was caught in getCards() method in DatabaseLab.java");
         } finally {
             cursor.close();
         }
 
-        return patters;
+        return cards;
     }
 
-    public Patter getPatter(String title) {
-        SkorCursorWrapper cursor = queryPatters(Cols.TITLE + " = ?", new String[] {title});
+    public Card getPatter(String title) {
+        SkorCursorWrapper cursor = queryCards(Cols.TITLE + " = ?", new String[] {title});
 
         try {
             if (cursor.getCount() == 0) {
@@ -106,10 +106,10 @@ public class DatabaseLab {
             }
 
             cursor.moveToFirst();
-            return cursor.getPatter();
+            return cursor.getCard();
         } catch (SQLiteException e) {
-            Log.e(GET_PATTER_EXCEPTION,
-                    "The exception was caught in getPatter() method in DatabaseLab.java");
+            Log.e(GET_CARD_EXCEPTION,
+                    "The exception was caught in getCard() method in DatabaseLab.java");
         } finally {
             cursor.close();
         }
