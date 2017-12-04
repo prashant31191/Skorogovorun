@@ -61,4 +61,7 @@ dependencies {
 
     // Number Progress Bar
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+
+    // Magic Progress Bar
+    compile 'com.liulishuo.magicprogresswidget:library:1.0.9'
 }

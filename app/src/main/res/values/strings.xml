@@ -37,6 +37,8 @@
     <string name="breath">Дыхание</string>
     <string name="voice">Голос</string>
     <string name="diction">Дикция</string>
+    <string name="got_it">Всё понятно</string>
+    <string name="go_ahead">Дальше</string>
 
     <string-array name="sorting_name">
         <item>Все</item>
