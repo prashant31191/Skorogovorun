@@ -232,7 +232,9 @@ public class ExercisesFragment extends Fragment {
                 .append("1 янв. 1970"));
 
         if (result.equals(mistake)) {
-            result = " ";
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(getString(R.string.never)));
         }
 
         return result;

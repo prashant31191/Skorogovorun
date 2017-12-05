@@ -2,7 +2,9 @@ package shavkunov.skorogovorun.lite.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -24,10 +26,20 @@ import shavkunov.skorogovorun.lite.controller.tabs.SettingsFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static final String LAST_DATE = "lastDate";
+    public static final String POSTURE_PERCENT = "posturePercent";
+    public static final String BREATH_PERCENT = "breathPercent";
+    public static final String VOICE_PERCENT = "voicePercent";
+    public static final String DICTION_PERCENT = "dictionPercent";
+
+    public static final String POSTURE_SAVED = "postureSaved";
+    public static final String BREATH_SAVED = "breathSaved";
+    public static final String VOICE_SAVED = "voiceSaved";
+    public static final String DICTION_SAVED = "dictionSaved";
 
     private long lastDate;
 
     private Fragment fragment;
+    private SharedPreferences preferences;
 
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
@@ -36,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         ButterKnife.bind(this);
         setBottomBar();
     }
@@ -52,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbarTitle = getString(R.string.exercises);
                         break;
                     case R.id.tab_course:
-                        fragment = CoursesFragment.newInstance();
+                        setCoursesFragment();
                         toolbarTitle = getString(R.string.courses);
                         break;
                     case R.id.tab_settings:
@@ -75,6 +88,21 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putLong(LAST_DATE, lastDate);
         fragment = ExercisesFragment.newInstance();
+        fragment.setArguments(bundle);
+    }
+
+    private void setCoursesFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(POSTURE_PERCENT,
+                preferences.getInt(POSTURE_SAVED, 0));
+        bundle.putInt(BREATH_PERCENT,
+                preferences.getInt(BREATH_SAVED, 0));
+        bundle.putInt(VOICE_PERCENT,
+                preferences.getInt(VOICE_SAVED, 0));
+        bundle.putInt(DICTION_PERCENT,
+                preferences.getInt(DICTION_SAVED, 0));
+
+        fragment = CoursesFragment.newInstance();
         fragment.setArguments(bundle);
     }
 
@@ -124,6 +152,33 @@ public class MainActivity extends AppCompatActivity {
                 case ExercisesFragment.REQUEST_FAVORITE_TONGUE_ACTIVITY:
                     lastDate = data.getLongExtra(FavoriteTongueActivity.EXTRA_DATE_FAVORITE, 0);
                     setExercisesFragment();
+                    setFragments();
+                    break;
+            }
+
+            switch (requestCode) {
+                case CoursesFragment.REQUEST_POSTURE:
+                    preferences.edit().putInt(POSTURE_SAVED,
+                            data.getIntExtra(CourseActivity.EXTRA_POSTURE, 0)).apply();
+                    setCoursesFragment();
+                    setFragments();
+                    break;
+                case CoursesFragment.REQUEST_BREATH:
+                    preferences.edit().putInt(BREATH_SAVED,
+                            data.getIntExtra(CourseActivity.EXTRA_BREATH, 0)).apply();
+                    setCoursesFragment();
+                    setFragments();
+                    break;
+                case CoursesFragment.REQUEST_VOICE:
+                    preferences.edit().putInt(VOICE_SAVED,
+                            data.getIntExtra(CourseActivity.EXTRA_VOICE, 0)).apply();
+                    setCoursesFragment();
+                    setFragments();
+                    break;
+                case CoursesFragment.REQUEST_DICTION:
+                    preferences.edit().putInt(DICTION_SAVED,
+                            data.getIntExtra(CourseActivity.EXTRA_DICTION, 0)).apply();
+                    setCoursesFragment();
                     setFragments();
                     break;
             }

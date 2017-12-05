@@ -28,7 +28,6 @@
     <string name="select_app">Выберите приложение</string>
     <string name="asses">Оценить приложение</string>
     <string name="sort">Сортировка скороговорок</string>
-    <string name="ok">ОК</string>
     <string name="shuffle">Перетасовать</string>
     <string name="shuffle_is_impossible">Перетасовка невозможна</string>
     <string name="little_patters">Слишком мало скороговорок</string>
@@ -39,6 +38,10 @@
     <string name="diction">Дикция</string>
     <string name="got_it">Всё понятно</string>
     <string name="go_ahead">Дальше</string>
+    <string name="never">Никогда</string>
+    <string name="start_course">Вы только начали курс</string>
+    <string name="end_course">Курс уже пройден. Хотели бы вы начать сначала?</string>
+    <string name="middle_course">Вы уверены, что хотите начать сначала?</string>
 
     <string-array name="sorting_name">
         <item>Все</item>

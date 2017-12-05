@@ -19,22 +19,42 @@ import butterknife.Unbinder;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.controller.CardLab;
 import shavkunov.skorogovorun.lite.controller.CourseActivity;
+import shavkunov.skorogovorun.lite.controller.MainActivity;
 
 public class CoursesFragment extends Fragment {
 
-    public static final int REQUEST_POSTURE = 0;
-    public static final int REQUEST_BREATH = 1;
-    public static final int REQUEST_VOICE = 2;
-    public static final int REQUEST_DICTION = 3;
+    public static final int REQUEST_POSTURE = 2;
+    public static final int REQUEST_BREATH = 3;
+    public static final int REQUEST_VOICE = 4;
+    public static final int REQUEST_DICTION = 5;
+
     public static final String EXTRA_COURSE = "extraCourse";
 
     private Unbinder unbinder;
+
+    private int posture;
+    private int breath;
+    private int voice;
+    private int diction;
 
     @BindView(R.id.courses_recycler_view)
     RecyclerView coursesRecyclerView;
 
     public static Fragment newInstance() {
         return new CoursesFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            posture = bundle.getInt(MainActivity.POSTURE_PERCENT);
+            breath = bundle.getInt(MainActivity.BREATH_PERCENT);
+            voice = bundle.getInt(MainActivity.VOICE_PERCENT);
+            diction = bundle.getInt(MainActivity.DICTION_PERCENT);
+        }
     }
 
     @Override
@@ -97,6 +117,7 @@ public class CoursesFragment extends Fragment {
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.man_posture,
                             holder.cCard_image);
 
+                    holder.cCardProgress.setProgress(posture);
                     holder.cCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -110,7 +131,7 @@ public class CoursesFragment extends Fragment {
                     holder.cCard_title.setText(getString(R.string.breath));
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.breath,
                             holder.cCard_image);
-                    holder.cCardProgress.setProgress(35);
+                    holder.cCardProgress.setProgress(breath);
                     holder.cCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -124,7 +145,7 @@ public class CoursesFragment extends Fragment {
                     holder.cCard_title.setText(getString(R.string.voice));
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.voice,
                             holder.cCard_image);
-                    holder.cCardProgress.setProgress(70);
+                    holder.cCardProgress.setProgress(voice);
                     holder.cCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -138,7 +159,7 @@ public class CoursesFragment extends Fragment {
                     holder.cCard_title.setText(getString(R.string.diction));
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.diction,
                             holder.cCard_image);
-                    holder.cCardProgress.setProgress(100);
+                    holder.cCardProgress.setProgress(diction);
                     holder.cCardButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

@@ -215,8 +215,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
             case R.id.action_sort:
                 String[] sortingName = getResources().getStringArray(R.array.sorting_name);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(getString(R.string.sort))
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.sort))
                         .setSingleChoiceItems(sortingName, lastChoiceItem,
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -226,7 +226,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
                                                 lastChoiceItem).apply();
                                     }
                                 })
-                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (CardLab.newInstance()
