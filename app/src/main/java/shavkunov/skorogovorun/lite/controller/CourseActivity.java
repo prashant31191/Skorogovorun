@@ -86,6 +86,9 @@ public class CourseActivity extends AppCompatActivity {
     @BindView(R.id.course_progress_bar)
     MagicProgressBar courseMagicBar;
 
+    @BindView(R.id.course_count)
+    TextView courseCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +119,7 @@ public class CourseActivity extends AppCompatActivity {
                     progressBar.hideNow();
 
                     if (task.getCards() != null) {
+                        courseCount.setVisibility(View.VISIBLE);
                         courseMagicBar.setVisibility(View.VISIBLE);
                         Collections.addAll(courses, task.getCards());
                         setRecyclerView();
@@ -344,13 +348,23 @@ public class CourseActivity extends AppCompatActivity {
         }
     }
 
+    private void setCourseCount(int currentPosition) {
+        String result = String.valueOf(new StringBuilder()
+                .append(currentPosition + 1)
+                .append("/").append(courses.size()));
+        courseCount.setText(result);
+    }
+
     public class CourseHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.card_title_course)
         TextView cardTitleCourse;
 
-        @BindView(R.id.card_button_course)
-        Button cardButtonCourse;
+        @BindView(R.id.card_button_prev)
+        Button cardButtonPrev;
+
+        @BindView(R.id.card_button_next)
+        Button cardButtonNext;
 
         public CourseHolder(View itemView) {
             super(itemView);
@@ -369,16 +383,30 @@ public class CourseActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final CourseHolder holder, int position) {
+            setCourseCount(position);
             holder.cardTitleCourse.setText(courses.get(position).getTitle());
+            holder.cardButtonPrev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.getAdapterPosition() == 0) {
+                        passPercentForResult();
+                        finish();
+                    } else {
+                        courseRecyclerView.scrollToPosition(holder.getAdapterPosition() - 1);
+                        courseMagicBar.setSmoothPercent(getReducedPercent(courseMagicBar));
+                        notifyDataSetChanged();
+                    }
+                }
+            });
 
-            final String courseTitle;
+            String courseTitle;
             if (position == (courses.size() - 1)) {
                 courseTitle = getString(R.string.got_it);
             } else {
                 courseTitle = getString(R.string.go_ahead);
             }
-            holder.cardButtonCourse.setText(courseTitle);
-            holder.cardButtonCourse.setOnClickListener(new View.OnClickListener() {
+            holder.cardButtonNext.setText(courseTitle);
+            holder.cardButtonNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (holder.getAdapterPosition() == courses.size() - 2) {
@@ -395,6 +423,7 @@ public class CourseActivity extends AppCompatActivity {
                         где максимальное значение - это 1.0f (100 % в Progress Bar)
                          */
                         courseMagicBar.setSmoothPercent(getIncreasedPercent(courseMagicBar));
+                        notifyDataSetChanged();
                     }
                 }
             });
@@ -411,6 +440,11 @@ public class CourseActivity extends AppCompatActivity {
         private float getIncreasedPercent(ISmoothTarget target) {
             float itemCount = (float) 1 / (courses.size() - 1);
             return target.getPercent() + itemCount;
+        }
+
+        private float getReducedPercent(ISmoothTarget target) {
+            float itemCount = (float) 1 / (courses.size() - 1);
+            return target.getPercent() - itemCount;
         }
 
         @Override

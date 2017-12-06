@@ -42,6 +42,7 @@
     <string name="start_course">Вы только начали курс</string>
     <string name="end_course">Курс уже пройден. Хотели бы вы начать сначала?</string>
     <string name="middle_course">Вы уверены, что хотите начать сначала?</string>
+    <string name="back">Назад</string>
 
     <string-array name="sorting_name">
         <item>Все</item>

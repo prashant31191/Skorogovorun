@@ -20,7 +20,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/card_button_course"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
@@ -34,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/card_dimen"
+                    android:layout_margin="@dimen/standard_dimen"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
                     android:textSize="@dimen/tongues_twisters_size"
@@ -42,13 +41,31 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/card_button_course"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            tools:text="Всё понятно" />
+            android:background="@color/colorAccent">
+
+            <Button
+                android:id="@+id/card_button_prev"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="@string/back"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/card_button_next"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/white"
+                tools:text="Дальше" />
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
