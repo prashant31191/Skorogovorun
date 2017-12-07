@@ -7,4 +7,5 @@
     <color name="colorFavoriteButton">#FF6666</color>
     <color name="colorBackgroundProgressBar">#E8DFD8</color>
     <color name="colorBackgroundFavoriteButton">#E8DFD8</color>
+    <color name="colorNotification">#333E44</color>
 </resources>
