@@ -190,7 +190,9 @@ public class ExercisesFragment extends Fragment {
         String result;
 
         if (seconds < 0) {
-            result = " ";
+            result = String.valueOf(new StringBuilder()
+                    .append(getString(R.string.last_visit)).append(" ")
+                    .append(getString(R.string.never)));
         } else if (seconds < 60) {
             result = String.valueOf(new StringBuilder()
                     .append(getString(R.string.last_visit)).append(" ")
