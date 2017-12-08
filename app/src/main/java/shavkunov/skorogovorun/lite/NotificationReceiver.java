@@ -16,8 +16,8 @@ import shavkunov.skorogovorun.lite.controller.MainActivity;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
-    private static final String CHANNEL_ID_NOTIFICATION = "channelNotification";
-    private static final String LOG_NOTIFICATION = "notification";
+    private static final String CHANNEL_ID_NOTIFICATION = "ChannelNotification";
+    private static final String LOG_NOTIFICATION = "Notification";
 
     @Override
     public void onReceive(Context context, Intent intent) {

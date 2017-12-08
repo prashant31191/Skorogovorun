@@ -8,4 +8,11 @@
     <color name="colorBackgroundProgressBar">#E8DFD8</color>
     <color name="colorBackgroundFavoriteButton">#E8DFD8</color>
     <color name="colorNotification">#333E44</color>
+    <color name="colorTimeOn">#757575</color>
+    <color name="colorTimeOff">#B7C4D1</color>
+    <color name="colorDialogPickerBackground">#212121</color>
+    <color name="colorPickerBackground">#171717</color>
+    <color name="colorLineColor">#4E4E4E</color>
+    <color name="colorTextBackground">#262626</color>
+    <color name="colorWhite">#FFF</color>
 </resources>

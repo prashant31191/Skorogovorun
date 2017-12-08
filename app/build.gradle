@@ -64,4 +64,7 @@ dependencies {
 
     // Magic Progress Bar
     compile 'com.liulishuo.magicprogresswidget:library:1.0.9'
+
+    // Linear Time Picker
+    compile 'net.codecrafted:lineartimepicker:1.0.0'
 }
