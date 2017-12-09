@@ -11,7 +11,6 @@ You can see how this app looks like or download and try to use it.
 
 The link to Google Play: [Skorogovorun](https://play.google.com/store/apps/details?id=shavkunov.skorogovorun.lite)
 # About the project
-At the moment the application has more than one hundred thousand downloads and on request "tongue twisters" is in the first place in the top applications.
 In the project, I applied basic aspects such as AsyncTask, AlarmManager, RecyclerView and adapters, Fragments, Activities, Dialogs, BroadcastReceiver and etc. I also used technologies such as Glide and ButterKnife
 
 Thank you for your time.
