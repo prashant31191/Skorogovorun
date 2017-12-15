@@ -64,7 +64,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     private void showHideEmptyViews() {
-        emptyFavoriteImage.setImageResource(R.drawable.zoom);
+        emptyFavoriteImage.setImageResource(R.drawable.hide);
         emptyFavoriteTitle.setText(R.string.favorite_title);
         emptyFavoriteSubtitle.setText(R.string.add_one_patter);
     }
@@ -82,7 +82,10 @@ public class FavoriteTongueActivity extends AppCompatActivity {
             }
         }
 
-        // Без ожидания не скролится к определенной позиции после смены ориентации
+        /*
+        Без ожидания не скролится к определенной позиции после смены ориентации,
+        поэтому ставим 1 мс
+         */
         final int finalLastPosition = lastPosition;
         new Handler().postDelayed(new Runnable() {
             @Override

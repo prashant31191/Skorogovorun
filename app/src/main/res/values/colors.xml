@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#F5F5F5</color>
-    <color name="colorAccent">#FF8C73</color>
+    <color name="colorAccent">#6787E3</color>
     <color name="colorBottomBarInActive">#263238</color>
     <color name="colorFavoriteButton">#FF6666</color>
-    <color name="colorBackgroundProgressBar">#E8DFD8</color>
+    <color name="colorBackgroundProgressBar">#d8dbe8</color>
     <color name="colorBackgroundFavoriteButton">#E8DFD8</color>
     <color name="colorNotification">#333E44</color>
     <color name="colorTimeOn">#757575</color>

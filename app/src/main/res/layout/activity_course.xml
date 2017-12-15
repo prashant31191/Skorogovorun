@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/course_linear_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_dimen"
+        android:orientation="horizontal">
 
         <com.liulishuo.magicprogresswidget.MagicProgressBar
             android:id="@+id/course_progress_bar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/standard_dimen"
-            android:layout_marginStart="@dimen/standard_dimen"
-            android:layout_toLeftOf="@+id/course_count"
-            android:layout_toStartOf="@+id/course_count"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:visibility="gone"
             app:mpb_background_color="@color/colorBackgroundProgressBar"
             app:mpb_fill_color="@color/colorAccent"
@@ -26,15 +25,17 @@
 
         <TextView
             android:id="@+id/course_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/standard_dimen"
-            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/standard_dimen"
+            android:layout_marginRight="@dimen/standard_dimen"
+            android:layout_weight="0.2"
+            android:gravity="end"
             android:visibility="gone"
+            android:textStyle="bold"
             tools:text="0/20" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_recycler_view"

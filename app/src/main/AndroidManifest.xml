@@ -31,7 +31,8 @@
         <activity android:name=".controller.CourseActivity" />
 
         <receiver
-            android:name=".NotificationReceiver">
+            android:name=".NotificationReceiver"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

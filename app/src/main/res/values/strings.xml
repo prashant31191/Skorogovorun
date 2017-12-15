@@ -44,4 +44,5 @@
     <string name="middle_course">Вы уверены, что хотите начать сначала?</string>
     <string name="back">Назад</string>
     <string name="notifications">Уведомления</string>
+    <string name="cancel">Отмена</string>
 </resources>

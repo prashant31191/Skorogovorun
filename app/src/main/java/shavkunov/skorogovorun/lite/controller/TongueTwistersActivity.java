@@ -112,7 +112,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         noInternetTitle.setVisibility(View.VISIBLE);
                         noInternetSubtitle.setVisibility(View.VISIBLE);
 
-                        noInternetImage.setImageResource(R.drawable.no_internet);
+                        noInternetImage.setImageResource(R.drawable.no_connection);
                         noInternetTitle.setText(R.string.no_connection);
                         noInternetSubtitle.setText(R.string.check_your_connection);
                         noInternetButton.setVisibility(View.VISIBLE);

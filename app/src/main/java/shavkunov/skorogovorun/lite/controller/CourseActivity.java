@@ -44,7 +44,7 @@ public class CourseActivity extends AppCompatActivity {
     public static final String EXTRA_POSTURE = "extraPosture";
     public static final String EXTRA_BREATH = "extraBreath";
     public static final String EXTRA_VOICE = "extraVoice";
-    public static final String EXTRA_DICTION = "extraDition";
+    public static final String EXTRA_DICTION = "extraDiction";
 
     private static final String SAVED_POSTURE = "savedPosture";
     private static final String SAVED_BREATH = "savedBreath";
@@ -122,14 +122,14 @@ public class CourseActivity extends AppCompatActivity {
                         courseCount.setVisibility(View.VISIBLE);
                         courseMagicBar.setVisibility(View.VISIBLE);
                         Collections.addAll(courses, task.getCards());
-                        setRecyclerView();
+                        setViews();
                         isInternet = true;
                     } else {
                         noInternetImage.setVisibility(View.VISIBLE);
                         noInternetTitle.setVisibility(View.VISIBLE);
                         noInternetSubtitle.setVisibility(View.VISIBLE);
 
-                        noInternetImage.setImageResource(R.drawable.no_internet);
+                        noInternetImage.setImageResource(R.drawable.no_connection);
                         noInternetTitle.setText(R.string.no_connection);
                         noInternetSubtitle.setText(R.string.check_your_connection);
                         noInternetButton.setVisibility(View.VISIBLE);
@@ -238,7 +238,7 @@ public class CourseActivity extends AppCompatActivity {
         task.execute();
     }
 
-    private void setRecyclerView() {
+    private void setViews() {
         courseRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, true) {
             @Override
@@ -265,6 +265,7 @@ public class CourseActivity extends AppCompatActivity {
             savedPercent = preferences.getFloat(SAVED_DICTION_PERCENT, 0);
         }
 
+        setCourseCount(savedPosition);
         courseRecyclerView.scrollToPosition(savedPosition);
         courseMagicBar.setPercent(savedPercent);
 

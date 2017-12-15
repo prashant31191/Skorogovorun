@@ -179,7 +179,7 @@ public class ExercisesFragment extends Fragment {
      *
      * @return строку с результатом
      */
-    private String lastVisit() {
+    private String setLastVisit(long lastDate) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
         long time = System.currentTimeMillis() - lastDate;
 
@@ -189,51 +189,47 @@ public class ExercisesFragment extends Fragment {
 
         String result;
 
-        if (seconds < 0) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(getString(R.string.never)));
-        } else if (seconds < 60) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(getString(R.string.less_than_a_minute)).append(" ")
-                    .append(getString(R.string.ago)));
-        } else if (seconds < 3600) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(minutes).append(" ").append(getString(R.string.minute))
-                    .append(" ").append(getString(R.string.ago)));
-        } else if (seconds < 7200) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(hours).append(" ").append(getString(R.string.hour))
-                    .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
-                    .append(" ").append(getString(R.string.ago)));
-        } else if (seconds < 86400) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(hours).append(" ").append(getString(R.string.hour_two))
-                    .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
-                    .append(" ").append(getString(R.string.ago)));
-        } else if (seconds < 172800) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(getString(R.string.yesterday)));
-        } else if (seconds < 259200) {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(getString(R.string.the_day_before_yesterday)));
+        if (lastDate > 0) {
+            if (seconds < 0) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(getString(R.string.never)));
+            } else if (seconds < 60) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(getString(R.string.less_than_a_minute)).append(" ")
+                        .append(getString(R.string.ago)));
+            } else if (seconds < 3600) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(minutes).append(" ").append(getString(R.string.minute))
+                        .append(" ").append(getString(R.string.ago)));
+            } else if (seconds < 7200) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(hours).append(" ").append(getString(R.string.hour))
+                        .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
+                        .append(" ").append(getString(R.string.ago)));
+            } else if (seconds < 86400) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(hours).append(" ").append(getString(R.string.hour_two))
+                        .append(" ").append(minutes).append(" ").append(getString(R.string.minute))
+                        .append(" ").append(getString(R.string.ago)));
+            } else if (seconds < 172800) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(getString(R.string.yesterday)));
+            } else if (seconds < 259200) {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(getString(R.string.the_day_before_yesterday)));
+            } else {
+                result = String.valueOf(new StringBuilder()
+                        .append(getString(R.string.last_visit)).append(" ")
+                        .append(dateFormat.format(new Date(lastDate))));
+            }
         } else {
-            result = String.valueOf(new StringBuilder()
-                    .append(getString(R.string.last_visit)).append(" ")
-                    .append(dateFormat.format(new Date(lastDate))));
-        }
-
-        String mistake = String.valueOf(new StringBuilder()
-                .append(getString(R.string.last_visit)).append(" ")
-                .append("1 янв. 1970"));
-
-        if (result.equals(mistake)) {
             result = String.valueOf(new StringBuilder()
                     .append(getString(R.string.last_visit)).append(" ")
                     .append(getString(R.string.never)));
@@ -249,7 +245,7 @@ public class ExercisesFragment extends Fragment {
                 Activity activity = getActivity();
 
                 if (activity != null) {
-                    holder.eCardDate.setText(lastVisit());
+                    holder.eCardDate.setText(setLastVisit(lastDate));
                 }
 
                 handler.postDelayed(this, 1000);

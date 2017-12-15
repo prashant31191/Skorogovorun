@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         String contentText = getRandomTextForNotification(context);
         Intent intentToMain = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 15,
-                intentToMain, PendingIntent.FLAG_CANCEL_CURRENT);
+                intentToMain, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context,
