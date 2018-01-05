@@ -37,14 +37,13 @@ public class SettingsFragment extends Fragment {
 
     private static final String LOG_ALARM_OFF = "AlarmManagerOff";
     private static final String LOG_ALARM_SET = "AlarmManagerWorked";
-    private static final String SAVED_ONE_TIME = "OnceTime";
+
     private static final String SAVED_MILLIS = "Millis";
     private static final String SAVED_CHECKED = "Checked";
 
     private Unbinder unbinder;
     private SharedPreferences preferences;
 
-    private boolean isOneTime;
     private long millis;
 
     @BindView(R.id.time_settings)
@@ -56,10 +55,6 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.switch_settings)
     SwitchCompat switchSettings;
 
-    public static Fragment newInstance() {
-        return new SettingsFragment();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstance) {
@@ -67,7 +62,6 @@ public class SettingsFragment extends Fragment {
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         unbinder = ButterKnife.bind(this, view);
         switchSettings.setChecked(preferences.getBoolean(SAVED_CHECKED, false));
-        isOneTime = preferences.getBoolean(SAVED_ONE_TIME, true);
         millis = preferences.getLong(SAVED_MILLIS, 0);
         setViews(millis);
         return view;
@@ -147,14 +141,13 @@ public class SettingsFragment extends Fragment {
                 .with(getContext())
                 .setDialogBackgroundColor(getResources().getColor(R.color.colorDialogPickerBackground))
                 .setPickerBackgroundColor(getResources().getColor(R.color.colorPickerBackground))
-                .setLineColor(getResources().getColor(R.color.colorLineColor))
-                .setTextColor(getResources().getColor(R.color.colorWhite))
-                .setShowTutorial(isOneTime)
+                .setLineColor(getResources().getColor(R.color.colorBlack))
+                .setTextColor(getResources().getColor(R.color.colorBlack))
+                .setButtonColor(getResources().getColor(R.color.colorBlack))
                 .setTextBackgroundColor(getResources().getColor(R.color.colorTextBackground))
                 .setButtonCallback(new LinearTimePickerDialog.ButtonCallback() {
                     @Override
                     public void onPositive(DialogInterface dialog, int hour, int minutes) {
-                        isOneTime = false;
                         switchSettings.setChecked(true);
                         setReminder(getContext(), NotificationReceiver.class,
                                 hour, minutes);
@@ -217,6 +210,5 @@ public class SettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        preferences.edit().putBoolean(SAVED_ONE_TIME, isOneTime).apply();
     }
 }

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Skorogovorun.iml" filepath="$PROJECT_DIR$/Skorogovorun.iml" />
-      <module fileurl="file://C:\Skorogovorun-master\Skorogovorun.iml" filepath="C:\Skorogovorun-master\Skorogovorun.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

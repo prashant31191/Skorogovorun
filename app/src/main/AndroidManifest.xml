@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="internalOnly"
-    package="shavkunov.skorogovorun.lite">
+    package="shavkunov.skorogovorun.lite"
+    android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,11 +24,13 @@
         </activity>
         <activity
             android:name=".controller.TongueTwistersActivity"
-            android:label="@string/tongue_twisters" />
+            android:label=" " />
         <activity
             android:name=".controller.FavoriteTongueActivity"
-            android:label="@string/favorites" />
-        <activity android:name=".controller.CourseActivity" />
+            android:label=" " />
+        <activity
+            android:name=".controller.CourseActivity"
+            android:label=" " />
 
         <receiver
             android:name=".NotificationReceiver"
@@ -36,6 +38,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

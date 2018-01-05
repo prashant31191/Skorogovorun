@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +41,6 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
     private static final String SAVED_LAST_PATTER = "lastPatter";
     private static final String SAVED_LAST_CHOICE_ITEM = "lastChoiceItem";
-    public static final String EXTRA_DATE_TONGUE = "extraDateTongue";
 
     private String[] arrayPatters = Constants.Url.ARRAY_PATTERS;
     private List<Card> patters;
@@ -70,12 +71,16 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @BindView(R.id.progress)
     DilatingDotsProgressBar progressBar;
 
+    @BindView(R.id.toolbar_actionbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_view);
         patters = new ArrayList<>();
         ButterKnife.bind(this);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         lastChoiceItem = sharedPreferences.getInt(SAVED_LAST_CHOICE_ITEM, 0);
@@ -107,6 +112,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
                         Collections.addAll(patters, task.getCards());
                         setTongueRecyclerView();
                         isInternet = true;
+                        toolbar.setNavigationIcon(R.drawable.chevron_left);
+                        setSupportActionBar(toolbar);
                     } else {
                         noInternetImage.setVisibility(View.VISIBLE);
                         noInternetTitle.setVisibility(View.VISIBLE);
@@ -187,14 +194,6 @@ public class TongueTwistersActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE_TONGUE, new Date().getTime());
-        setResult(RESULT_OK, intent);
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_tongue_twisters, menu);
         return true;
@@ -203,6 +202,9 @@ public class TongueTwistersActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.action_shuffle:
                 if (patters.size() > 1) {
                     Collections.shuffle(patters);

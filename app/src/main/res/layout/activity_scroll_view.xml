@@ -5,10 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar" />
+
     <com.yarolegovich.discretescrollview.DiscreteScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_actionbar"
         app:dsv_orientation="horizontal"/>
 
     <include

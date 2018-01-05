@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,6 +90,9 @@ public class CourseActivity extends AppCompatActivity {
     @BindView(R.id.course_count)
     TextView courseCount;
 
+    @BindView(R.id.toolbar_courses)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +127,8 @@ public class CourseActivity extends AppCompatActivity {
                         courseMagicBar.setVisibility(View.VISIBLE);
                         Collections.addAll(courses, task.getCards());
                         setViews();
+                        toolbar.setNavigationIcon(R.drawable.chevron_left);
+                        setSupportActionBar(toolbar);
                         isInternet = true;
                     } else {
                         noInternetImage.setVisibility(View.VISIBLE);
@@ -302,6 +308,9 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.action_restart:
                 showAlertDialog();
                 return true;

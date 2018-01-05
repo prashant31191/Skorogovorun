@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_courses"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:id="@+id/course_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_margin="@dimen/standard_dimen"
+        android:orientation="horizontal">
+
+        <com.liulishuo.magicprogresswidget.MagicProgressBar
+            android:id="@+id/course_progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:mpb_background_color="@color/colorBackgroundProgressBar"
+            app:mpb_fill_color="@color/colorAccent"
+            app:mpb_flat="false" />
+
+        <TextView
+            android:id="@+id/course_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/standard_dimen"
+            android:layout_marginRight="@dimen/standard_dimen"
+            android:layout_weight="0.2"
+            android:gravity="end"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="0/20" />
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

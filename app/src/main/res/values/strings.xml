@@ -45,4 +45,6 @@
     <string name="back">Назад</string>
     <string name="notifications">Уведомления</string>
     <string name="cancel">Отмена</string>
+    <string name="poems">Стихи</string>
+    <string name="breathing_exercises">Дыхательная гимнастика</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -29,7 +30,6 @@ import shavkunov.skorogovorun.lite.model.Card;
 public class FavoriteTongueActivity extends AppCompatActivity {
 
     private static final String SAVED_LAST_PATTER_FAVORITE = "lastPatterFavorite";
-    public static final String EXTRA_DATE_FAVORITE = "extraDateFavorite";
 
     private List<Card> patters;
 
@@ -48,11 +48,17 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @BindView(R.id.subtitle_empty)
     TextView emptyFavoriteSubtitle;
 
+    @BindView(R.id.toolbar_actionbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_view);
         ButterKnife.bind(this);
+        toolbar.setNavigationIcon(R.drawable.chevron_left);
+        setSupportActionBar(toolbar);
+
         patters = DatabaseLab.getInstance(this).getCards();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -111,14 +117,6 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE_FAVORITE, new Date().getTime());
-        setResult(RESULT_OK, intent);
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_favorite, menu);
         return true;
@@ -127,6 +125,9 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.action_shuffle:
                 if (patters.size() > 1) {
                     Collections.shuffle(patters);

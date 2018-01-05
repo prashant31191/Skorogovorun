@@ -2,17 +2,16 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_default"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginLeft="@dimen/card_margin"
     android:layout_marginRight="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin_top"
-    android:layout_marginBottom="@dimen/card_margin_bottom"
     card_view:cardCornerRadius="@dimen/cardCornerRadius">
 
     <GridLayout
@@ -23,7 +22,7 @@
         <ImageView
             android:id="@+id/card_image_default"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="115dp"
             android:layout_row="0"
             android:scaleType="centerCrop"
             tools:src="@drawable/preview_patters" />
@@ -56,22 +55,6 @@
             android:orientation="horizontal">
 
             <com.sackcentury.shinebuttonlib.ShineButton
-                android:id="@+id/card_favorite_default"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@android:color/white"
-                android:visibility="gone"
-                app:allow_random_color="false"
-                app:btn_color="@android:color/white"
-                app:btn_fill_color="@android:color/white"
-                app:click_animation_duration="0"
-                app:shine_animation_duration="0"
-                app:shine_count="0"
-                app:shine_turn_angle="40"
-                app:siShape="@drawable/favorite" />
-
-            <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/card_button_default"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -89,38 +72,6 @@
                 app:shine_count="0"
                 app:shine_turn_angle="40"
                 app:siShape="@drawable/play" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_row="0"
-            android:background="@android:drawable/screen_background_dark_transparent"
-            android:orientation="vertical">
-
-            <com.daimajia.numberprogressbar.NumberProgressBar
-                android:id="@+id/card_progress_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_dimen"
-                android:visibility="gone"
-                custom:progress_reached_color="@android:color/white"
-                custom:progress_text_color="@android:color/white"
-                custom:progress_unreached_color="@android:color/white" />
-
-            <TextView
-                android:id="@+id/card_subtitle_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="@dimen/standard_dimen"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/subtitle_size"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:text="Заходили 17 минут назад" />
         </LinearLayout>
     </GridLayout>
 </android.support.v7.widget.CardView>
