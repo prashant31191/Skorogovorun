@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dreamtobe.percentsmoothhandler.ISmoothTarget;
+import shavkunov.skorogovorun.lite.CardLab;
 import shavkunov.skorogovorun.lite.Constants;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.SkorogovorunTask;

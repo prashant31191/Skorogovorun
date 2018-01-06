@@ -1,4 +1,4 @@
-package shavkunov.skorogovorun.lite.controller;
+package shavkunov.skorogovorun.lite;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,16 +18,19 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class CardLab {
 
-    private static CardLab cardLab;
+    private volatile static CardLab cardLab;
 
     private CardLab() {
     }
 
     public static CardLab newInstance() {
         if (cardLab == null) {
-            cardLab = new CardLab();
+            synchronized (CardLab.class) {
+                if (cardLab == null) {
+                    cardLab = new CardLab();
+                }
+            }
         }
-
         return cardLab;
     }
 

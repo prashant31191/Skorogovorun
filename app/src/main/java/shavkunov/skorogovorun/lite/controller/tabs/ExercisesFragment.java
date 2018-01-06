@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import shavkunov.skorogovorun.lite.R;
-import shavkunov.skorogovorun.lite.controller.CardLab;
+import shavkunov.skorogovorun.lite.CardLab;
 import shavkunov.skorogovorun.lite.controller.FavoriteTongueActivity;
 import shavkunov.skorogovorun.lite.controller.TongueTwistersActivity;
 

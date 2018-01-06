@@ -18,12 +18,16 @@ public class DatabaseLab {
     private static final String GET_CARDS_EXCEPTION = "getCardsException";
     private static final String GET_CARD_EXCEPTION = "getCardException";
 
-    private static DatabaseLab databaseLab;
+    private volatile static DatabaseLab databaseLab;
     private SQLiteDatabase database;
 
     public static DatabaseLab getInstance(Context context) {
         if (databaseLab == null) {
-            databaseLab = new DatabaseLab(context);
+            synchronized (DatabaseLab.class) {
+                if (databaseLab == null) {
+                    databaseLab = new DatabaseLab(context);
+                }
+            }
         }
         return databaseLab;
     }

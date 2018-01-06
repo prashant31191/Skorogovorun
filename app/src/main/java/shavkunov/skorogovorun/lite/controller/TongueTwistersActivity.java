@@ -1,7 +1,6 @@
 package shavkunov.skorogovorun.lite.controller;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -10,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +22,12 @@ import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import shavkunov.skorogovorun.lite.CardLab;
 import shavkunov.skorogovorun.lite.Constants;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.SkorogovorunTask;
