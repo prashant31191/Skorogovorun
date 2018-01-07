@@ -3,10 +3,10 @@ There is nothing better than to be fluent in your own language and for this purp
 # Try to use it
 You can see how this app looks like or download and try to use it.
 <p align="center">
-  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/1.png" width="350"/>
-  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/2.png" width="350"/>
-  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/3.png" width="350"/>
-  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/4.png" width="350"/>
+  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/one.png" width="350"/>
+  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/two.png" width="350"/>
+  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/three.png" width="350"/>
+  <img src="https://github.com/AlexShavkunov/Skorogovorun/blob/master/screens/four.png" width="350"/>
 </p>
 
 The link to Google Play: [Skorogovorun](https://play.google.com/store/apps/details?id=shavkunov.skorogovorun.lite) (The app isn't ready yet so the link goes to the old version)
