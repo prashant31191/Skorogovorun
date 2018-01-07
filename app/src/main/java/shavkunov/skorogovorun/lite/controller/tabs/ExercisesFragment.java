@@ -127,12 +127,16 @@ public class ExercisesFragment extends Fragment {
                     CardLab.newInstance().setImage(holder.itemView, R.drawable.posture_training,
                             holder.eCardImage);
                     break;
+                case 4:
+                    holder.eCardTitle.setText(R.string.voice);
+                    CardLab.newInstance().setImage(holder.itemView, R.drawable.conversation,
+                            holder.eCardImage);
             }
         }
 
         @Override
         public int getItemCount() {
-            return 4;
+            return 5;
         }
     }
 }

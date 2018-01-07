@@ -1,6 +1,5 @@
 package shavkunov.skorogovorun.lite.controller;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -17,13 +16,11 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shavkunov.skorogovorun.lite.R;
-import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Card;
 
@@ -34,7 +31,7 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     private List<Card> patters;
 
     private SharedPreferences preferences;
-    private TongueTwistersAdapter adapter;
+    private CardsAdapter adapter;
 
     @BindView(R.id.scroll_view)
     DiscreteScrollView favoriteTongueScrollView;
@@ -76,7 +73,8 @@ public class FavoriteTongueActivity extends AppCompatActivity {
     }
 
     private void setScrollView() {
-        adapter = new TongueTwistersAdapter(this, patters, false);
+        adapter = new CardsAdapter(this, patters, new FavoriteBehavior());
+        adapter.setCardsAdapter(adapter);
         favoriteTongueScrollView.setAdapter(adapter);
 
         String lastPatterTitle = preferences.getString(SAVED_LAST_PATTER_FAVORITE, "");

@@ -31,7 +31,6 @@ import shavkunov.skorogovorun.lite.CardLab;
 import shavkunov.skorogovorun.lite.Constants;
 import shavkunov.skorogovorun.lite.R;
 import shavkunov.skorogovorun.lite.SkorogovorunTask;
-import shavkunov.skorogovorun.lite.TongueTwistersAdapter;
 import shavkunov.skorogovorun.lite.database.DatabaseLab;
 import shavkunov.skorogovorun.lite.model.Card;
 
@@ -45,7 +44,7 @@ public class TongueTwistersActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SkorogovorunTask task;
-    private TongueTwistersAdapter adapter;
+    private CardsAdapter adapter;
 
     private boolean isNotFirstVisit;
     private boolean isInternet;
@@ -147,7 +146,8 @@ public class TongueTwistersActivity extends AppCompatActivity {
     }
 
     private void setTongueRecyclerView() {
-        adapter = new TongueTwistersAdapter(this, patters, true);
+        adapter = new CardsAdapter(this, patters, new MainBehavior());
+        adapter.setCardsAdapter(adapter);
         tongueScrollView.setAdapter(adapter);
 
         /*
